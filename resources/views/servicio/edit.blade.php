@@ -12,7 +12,6 @@
                 @csrf
                 @method('PUT')
 
-
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -22,7 +21,6 @@
                         </ul>
                     </div>
                 @endif
-
 
                 <div class="form-group">
                     <label for="nombre">Nombre</label>

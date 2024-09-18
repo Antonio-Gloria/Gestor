@@ -16,38 +16,16 @@
        </div>
 
        <div class="row">
-           <h2>Solicitar servicio </h2>
+           <h2>Servicio agregado exitosamente</h2>
            <hr>
            <br>
            <p align="right">
-               <a href="{{ route('servicios.create') }}" class="btn btn-success">Solicitar servicio</a>
+               <a href="{{ route('servicios.create') }}" class="btn btn-success">Solicitar otro servicio</a>
                <a href="{{ route('home') }}" class="btn btn-primary">
                    Regresar
                </a>
            </p>
-           <table id="example" class="table table-striped table-bordered" style="width:100%">
-               <thead>
-                   <tr>
-                       <th>Acciones</th>
-                       <th>Id Servicio</th>
-                       <th>Tipo de servicio solicitado</th>
-                       <th>Fecha</th>
-                       <th>Hora</th>
-                       <th>Estado</th>
-                       <th>Nombre del solicitante</th>
-                       <th>Apellido del solicitante</th>
-                       <th>Departamento</th>  
-                       <th>Codigo</th>
-                       <th>Contacto</th>
-                       <th>tipo</th>          
-                       <th>Email</th>
-                   </tr>
-               </thead>
-               <tbody>
-
-               </tbody>
-
-           </table>
+          
        </div>
    </div>
   
@@ -91,12 +69,9 @@ function modal(parametro){
    $('#nombre').html(parametro);
 
 
-   let url = "{{route('delete-servicio', ':id')}}";
-   url = url.replace(':id',parametro);
-   document.getElementById('borrar').href= url;
-  
+ 
 }
-   var data = @json($servicios);
+  
 
    $(document).ready(function() {
        $('#example').DataTable({

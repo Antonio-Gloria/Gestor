@@ -11,6 +11,15 @@ class ServicioController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function index2()
+    {
+//Muestra los registros de la tabla
+       $vs_servicios = Servicio::where('status', '=', 1)->get();
+       $servicios = $this->cargarDT($vs_servicios);
+       return view('servicio.index2', compact('servicios')); 
+
+    }
+
     public function index()
     {
 //Muestra los registros de la tabla
@@ -55,6 +64,7 @@ class ServicioController extends Controller
                $value['codigo'],
                $value['contacto'],
                $value['tipo'],
+               $value['email'],
               
            );
        }
@@ -94,7 +104,8 @@ class ServicioController extends Controller
                 'departamento' => 'required',
                 'codigo' => 'required',
                 'contacto' => 'required',
-                'tipo' => 'required'
+                'tipo' => 'required',
+                'email' => 'required',
             ]);
     
             $servicio = new Servicio();
@@ -111,12 +122,11 @@ class ServicioController extends Controller
             $servicio->codigo = $request->input('codigo');
             $servicio->contacto = $request->input('contacto');
             $servicio->tipo = $request->input('tipo');
-    
+            $servicio->email = $request->input('email');
             $servicio->status = 1;
 
-
             $servicio->save();
-            return redirect()->route('servicios.index')->with(array(
+            return redirect()->route('servicios.index2')->with(array(
                 'message' => 'El servicio solicitado se ha agregado'
             ));
     }

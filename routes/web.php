@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ServicioController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,5 +31,10 @@ Route::resource('/servicios', App\Http\Controllers\ServicioController::class)
         'middleware' => 'auth',
         'uses'=> 'App\Http\Controllers\ServicioController@delete_servicio'
     ]);
+
+    // routes/web.php
+
+    Route::get('/servicios/index2', [ServicioController::class, 'index2'])->name('servicios.index2');
+
     
 

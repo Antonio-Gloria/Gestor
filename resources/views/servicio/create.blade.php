@@ -4,7 +4,7 @@
 
     <div class="container">
         <div class="row">
-            <h2>Agregar un nuevo servicio</h2>
+            <h2>Solicitar un nuevo servicio</h2>
             <hr>
             <form action="{{ route('servicios.store') }}" method="post" enctype="multipart/form-data" class="col-lg-7">
                 @csrf
@@ -33,11 +33,11 @@
                 
                 <!-- <div class="form-group"> -->
 
-                <div class="cold-md-6">
+                <div class="form-group">
                     <label for="fecha">Fecha</label>
                     <input type="date" class="form-control" id="fecha" name="fecha" value="{{ old('fecha') }}" />
                 </div>
-                <div class="col-md-6">
+                <div class="form-group">
                     <label for="hora">Hora</label>
                     <input type="time" class="form-control" id="hora" name="hora" value="{{ old('hora') }}" />
                 </div>
@@ -70,7 +70,11 @@
                     <label for="tipo">Tipo</label>
                     <input type="text" class="form-control" id="tipo" name="tipo" value="{{ old('tipo') }}" />
                 </div>
-               
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required />
+                </div>
+                
                 <a href="/home" type="submit" class="btn btn-danger">Cancelar</a>
                 <button type="submit" class="btn btn-success">Agregar nuevo servicio</button>
             </form>
