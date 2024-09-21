@@ -16,7 +16,7 @@
        </div>
 
        <div class="row">
-           <h2>Solicitar servicio </h2>
+           <h2>Lista de servicios por realizar</h2>
            <hr>
            <br>
            <p align="right">
@@ -91,7 +91,7 @@ function modal(parametro){
    $('#nombre').html(parametro);
 
 
-   let url = "{{route('delete-servicio', ':id')}}";
+   let url = "{{route('realizado-servicio', ':id')}}";
    url = url.replace(':id',parametro);
    document.getElementById('borrar').href= url;
   

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TipoServicio extends Model
 {
     use HasFactory;
+
 }

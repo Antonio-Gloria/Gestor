@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Gestor</b>Servicios',
+    'logo' => '<b>Admin</b>LTE',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -324,8 +324,8 @@ return [
         ],
         ['header' => 'account_settings'],
         [
-            'text' => 'Tipo servicios',
-            'url' => 'servicios',
+            'text' => 'Servicios',
+            'url' => 'servicios/create',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

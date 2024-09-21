@@ -2,8 +2,9 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row">
+    <div class="container-sm">
+        <div class="container-fluid">
+            <div></div>
             <h2>Solicitar un nuevo servicio</h2>
             <hr>
             <form action="{{ route('servicios.store') }}" method="post" enctype="multipart/form-data" class="col-lg-7">
@@ -33,33 +34,56 @@
                 
                 <!-- <div class="form-group"> -->
 
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="fecha">Fecha</label>
                     <input type="date" class="form-control" id="fecha" name="fecha" value="{{ old('fecha') }}" />
                 </div>
                 <div class="form-group">
                     <label for="hora">Hora</label>
                     <input type="time" class="form-control" id="hora" name="hora" value="{{ old('hora') }}" />
-                </div>
+                </div> -->
+                <div class="container px-4 text-center">
+                    <div class="row gx-5">
+                      <div class="col">
+                       <div class="p-1 border bg-dark">Fecha</div>
+                       <input type="date" class="form-control" id="fecha" name="fecha" value="{{ old('fecha') }}" />
+                      </div>
+                      <div class="col">
+                        <div class="p-1 border bg-dark">Hora</div>
+                        <input type="time" class="form-control" id="hora" name="hora" value="{{ old('hora') }}" />
+                      </div>
+                    </div>
+                  </div>
                 <div class="form-group">
                     <label for="estado">Estado</label>
                     <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}" />
                 </div>
-              
-                <div class="form-group">
+                <div class="container px-4 text-center">
+                    <div class="row gx-5">
+                      <div class="col">
+                       <div class="p-1 border bg-dark">Nombre del solicitante</div>
+                       <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" value="{{ old('nombre_solicitante') }}" />
+                      </div>
+                      <div class="col">
+                        <div class="p-1 border bg-dark">Apellido del solicitante</div>
+                        <input type="text" class="form-control" id="apellido_solicitante" name="apellido_solicitante" value="{{ old('apellido_solicitante') }}" />
+                      </div>
+                    </div>
+                  </div>
+                <!-- <div class="form-group">
                     <label for="nombre_solicitante">Nombre del solicitante</label>
-                    <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" value="{{ old('nombre_solicitante') }}" />
+                    
                 </div>
                 <div class="form-group">
                     <label for="apellido_solicitante">Apellido del solicitante</label>
-                    <input type="text" class="form-control" id="apellido_solicitante" name="apellido_solicitante" value="{{ old('apellido_solicitante') }}" />
-                </div>
+                   
+                </div> -->
                 <div class="form-group">
                     <label for="departamento">Departamento</label>
                     <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}" />
                 </div>
                 <div class="form-group">
-                    <label for="codigo">Codigo</label>
+                    <label for="codigo">Código</label>
                     <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}" />
                 </div>
                 <div class="form-group">
@@ -75,7 +99,7 @@
                     <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required />
                 </div>
                 
-                <a href="/home" type="submit" class="btn btn-danger">Cancelar</a>
+                <a href="{{ route('home') }}" type="submit" class="btn btn-danger">Cancelar</a>
                 <button type="submit" class="btn btn-success">Agregar nuevo servicio</button>
             </form>
             </form>
