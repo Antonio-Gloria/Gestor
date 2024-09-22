@@ -29,6 +29,6 @@ class Servicio extends Model
     {
         return $this->belongsTo(TipoServicio::class, 'tipo_servicio_id');
     }
-    
+      
     
 }

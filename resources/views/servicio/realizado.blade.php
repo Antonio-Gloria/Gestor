@@ -16,54 +16,41 @@
        </div>
 
        <div class="row">
-           <h2>Lista de servicios por realizar</h2>
+           <h2>Lista de servicios realizados</h2>
            <hr>
            <br>
            <p align="right">
-               <a href="{{ route('servicios.create') }}" class="btn btn-success">Solicitar servicio</a>
-               <a href="{{ route('servicios.realizado')}}" class="btn btn-info">Ir a servicios realizados</a>
-               <a href="{{ route('home') }}" class="btn btn-primary">
+              
+               <a href="{{ route('servicios.index') }}" class="btn btn-primary">
                    Regresar
                </a>
            </p>
            <table id="example" class="table table-striped table-bordered" style="width:100%">
-               <thead>
-                   <tr>
-                       <th>Acciones</th>
-                       <th>Id Servicio</th>
-                       <th>Tipo de servicio solicitado</th>
-                       <th>Fecha</th>
-                       <th>Hora</th>
-                       <th>Estado</th>
-                       <th>Nombre del solicitante</th>
-                       <th>Apellido del solicitante</th>
-                       <th>Departamento</th>  
-                       <th>Codigo</th>
-                       <th>Contacto</th>
-                       <th>tipo</th>          
-                       <th>Email</th>
-                   </tr>
-               </thead>
-               <tbody>
-                    @foreach($servicios as $servicio)
-                    <tr>
-                        <td>{{ $servicio[0] }}</td> <!-- Acciones -->
-                        <td>{{ $servicio[1] }}</td> <!-- Id Servicio -->
-                        <td>{{ $servicio[2] }}</td> <!-- Tipo de servicio solicitado -->
-                        <td>{{ $servicio[3] }}</td> <!-- Fecha -->
-                        <td>{{ $servicio[4] }}</td> <!-- Hora -->
-                        <td>{{ $servicio[5] }}</td> <!-- Estado -->
-                        <td>{{ $servicio[6] }}</td> <!-- Nombre del solicitante -->
-                        <td>{{ $servicio[7] }}</td> <!-- Apellido del solicitante -->
-                        <td>{{ $servicio[8] }}</td> <!-- Departamento -->
-                        <td>{{ $servicio[9] }}</td> <!-- Código -->
-                        <td>{{ $servicio[10] }}</td> <!-- Contacto -->
-                        <td>{{ $servicio[11] }}</td> <!-- Tipo -->
-                        <td>{{ $servicio[12] }}</td> <!-- Email -->
-                    </tr>
-                    @endforeach
-                </tbody>
-           </table>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Id Servicio</th>
+                    <th>Tipo de servicio solicitado</th>               
+                    <th>Hora</th>
+                    <th>Estado</th>                 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($servicios as $servicio)
+                <tr>
+                    <td>{{ $servicio[0] }}</td> <!-- Acciones -->
+                    <td>{{ $servicio[1] }}</td> <!-- Id Servicio -->
+                    <td>{{ $servicio[2] }}</td> <!-- Tipo de servicio solicitado -->
+                    <td>{{ $servicio[3] }}</td> <!-- Fecha -->
+                    <td>{{ $servicio[4] }}</td> <!-- Estado -->
+                    <!-- Eliminar las columnas no deseadas -->
+                </tr>
+                @endforeach
+            </tbody>
+            
+            
+        </table>
+        
        </div>
    </div>
   
@@ -80,8 +67,7 @@
         
        </div>
        <div class="modal-footer">
-         <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-         <!-- <a href="" id="borrar" class="btn btn-danger">borrar</a> -->
+         
          //<a href="" id="solicitar" class="btn btn-danger">Agregar</a>
         
        </div>

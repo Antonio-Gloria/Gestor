@@ -41,6 +41,7 @@ Route::get('realizado-servicio/{servicio_id}',[
 
 Route::get('/servicios/index2', [ServicioController::class, 'index2'])->name('servicios.index2');
     
+Route::get('/servicio/realizado', [ServicioController::class, 'realizado'])->name('servicios.realizado');
 
     
 

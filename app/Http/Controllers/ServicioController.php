@@ -25,57 +25,96 @@ class ServicioController extends Controller
     public function index()
     {
 //Muestra los registros de la tabla
-       $vs_servicios = Servicio::where('status', '=', 1)->get();
+       $vs_servicios = Servicio::with( 'tipoServicio')->where('status', '=', 1)->get();
        $servicios = $this->cargarDT($vs_servicios);
        return view('servicio.index', compact('servicios')); 
 
     }
 
-    public function cargarDT($consulta)
-   {
-       $servicios = [];
-       foreach ($consulta as $key => $value) {
-           $ruta = "eliminar" . $value['id'];
-           $eliminar = route('delete-servicio', $value['id']);
-           $realizado = route('realizado-servicio', $value['id']);
-           $acciones = '
-          <div class="btn-acciones">
-              <div class="btn-circle">
-                  <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
-                      <i class="far fa-envelope"></i>
-                  </a>
-                  
-                   <a href="' . $eliminar . '" role="button" class="btn btn-danger"title="Eliminar" onclick="modal('.$value['id'].')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
-                      <i class="far fa-trash-alt"></i>
-                  </a>
-              </div>
-          </div>
-';
+    public function realizado()
+{
+    // Muestra los registros de la tabla con la relación 'tipoServicio' cargada
+    $vs_servicios = Servicio::with('tipoServicio')->where('status', '=', 2)->get();
+    $servicios = $this->cargarDT2($vs_servicios);
+        
+    return view('servicio.realizado', compact('servicios'));
+}
 
-           $servicios[$key] = array(
-               $acciones,
-               $value['id'],
-               $value['tipo_servicio_id'],
-               $value['fecha'],
-               $value['hora'],
-               $value['estado'],
-               //$value['tecnico_id'],
-               $value['nombre_solicitante'],
-               $value['apellido_solicitante'],
-               $value['departamento'],
-               $value['codigo'],
-               $value['contacto'],
-               $value['tipo'],
-               $value['email'],
-              
-           );
-       }
+public function cargarDT($consulta)
+{
+    $servicios = [];
+    foreach ($consulta as $key => $value) {
+        $ruta = "eliminar" . $value['id'];
+        $eliminar = route('delete-servicio', $value['id']);
+        $realizado = route('realizado-servicio', $value['id']);
+        $acciones = '
+            <div class="btn-acciones">
+                <div class="btn-circle">
+                    <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
+                        <i class="far fa-envelope"></i>
+                    </a>
+                    <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+        ';
 
-       return $servicios;
-   }
+        $servicios[$key] = array(
+            $acciones,
+            $value['id'],
+            $value->tipoServicio->nombre, // Cambiar aquí
+            $value['fecha'],
+            $value['hora'],
+            $value['estado'],
+            $value['nombre_solicitante'],
+            $value['apellido_solicitante'],
+            $value['departamento'],
+            $value['codigo'],
+            $value['contacto'],
+            $value['tipo'],
+            $value['email'],
+        );
+    }
+
+    return $servicios;
+}
+
+public function cargarDT2($consulta)
+{
+    $servicios = [];
+    foreach ($consulta as $key => $value) {
+        $ruta = "eliminar" . $value['id'];
+        $eliminar = route('delete-servicio', $value['id']);
+        $realizado = route('realizado-servicio', $value['id']);
+        $acciones = '
+            <div class="btn-acciones">
+                <div class="btn-circle">
+                    <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
+                        <i class="far fa-envelope"></i>
+                    </a>
+                    <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+        ';
+
+        $servicios[$key] = array(
+            $acciones,
+            $value['id'],
+            $value->tipoServicio->nombre, // Solo incluir el nombre
+            $value['fecha'],
+            $value['estado'], // Solo incluir el estado
+            // No incluir otros campos
+        );
+    }
+
+    return $servicios;
+}
 
 
-
+   
     /**
      * Show the form for creating a new resource.
      */
@@ -104,7 +143,7 @@ class ServicioController extends Controller
             'codigo' => 'required',
             'contacto' => 'required',
             'tipo' => 'required',
-            'email' => 'required|email', // asegúrate de que el campo email tenga formato correcto
+            'email' => 'required|email', 
         ]);
     
         $servicio = new Servicio();
@@ -126,8 +165,11 @@ class ServicioController extends Controller
         // Enviar el correo de confirmación
         Mail::to($servicio->email)->send(new ServicioSolicitado($servicio));
     
-        return redirect()->route('servicios.index2')->with(array(
-            'message' => 'El servicio solicitado se ha agregado y se ha enviado un correo de confirmación.'
+        //return redirect()->route('servicios.index2')->with(array(
+            //'message' => 'El servicio solicitado se ha agregado y se ha enviado un correo de confirmación.'
+
+             return redirect()->route('servicios.create')->with(array(
+                "message" => "Servicio realizado"
         ));
     }
     
@@ -171,7 +213,7 @@ class ServicioController extends Controller
             $servicio->status = 0;
             $servicio->update();
             return redirect()->route('servicios.index')->with(array(
-                "message" => "Servicio realizado"
+                "message" => "Servicio eliminado"
             ));
         } else {
             return redirect()->route('servicios.index')->with(array(
@@ -185,7 +227,7 @@ class ServicioController extends Controller
     {
         $servicio = Servicio::find($servicio_id);
         if ($servicio) {
-            $servicio->status = 0;
+            $servicio->status = 2;
             $servicio->update();
             return redirect()->route('servicios.index')->with(array(
                 "message" => "Servicio realizado"
