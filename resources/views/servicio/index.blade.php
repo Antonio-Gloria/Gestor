@@ -2,6 +2,8 @@
 
 @section('css')
 <link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="{{asset('build/assets/app.js')}}"></script>
 @endsection
@@ -15,8 +17,11 @@
            @endif
        </div>
 
-       <div class="row">
-           <h2>Lista de servicios por realizar</h2>
+       <div class="container py-8">
+      
+        <h1 class="text-3xl font-bold text-red-500 shadow-lg text-center">Lista de Servicios por Realizar</h1>
+
+
            <hr>
            <br>
            <p align="right">
@@ -34,14 +39,9 @@
                        <th>Tipo de servicio solicitado</th>
                        <th>Fecha</th>
                        <th>Hora</th>
-                       <th>Estado</th>
                        <th>Nombre del solicitante</th>
                        <th>Apellido del solicitante</th>
-                       <th>Departamento</th>  
-                       <th>Codigo</th>
-                       <th>Contacto</th>
-                       <th>tipo</th>          
-                       <th>Email</th>
+                       
                    </tr>
                </thead>
                <tbody>
@@ -51,15 +51,10 @@
                         <td>{{ $servicio[1] }}</td> <!-- Id Servicio -->
                         <td>{{ $servicio[2] }}</td> <!-- Tipo de servicio solicitado -->
                         <td>{{ $servicio[3] }}</td> <!-- Fecha -->
-                        <td>{{ $servicio[4] }}</td> <!-- Hora -->
-                        <td>{{ $servicio[5] }}</td> <!-- Estado -->
-                        <td>{{ $servicio[6] }}</td> <!-- Nombre del solicitante -->
-                        <td>{{ $servicio[7] }}</td> <!-- Apellido del solicitante -->
-                        <td>{{ $servicio[8] }}</td> <!-- Departamento -->
-                        <td>{{ $servicio[9] }}</td> <!-- Código -->
-                        <td>{{ $servicio[10] }}</td> <!-- Contacto -->
-                        <td>{{ $servicio[11] }}</td> <!-- Tipo -->
-                        <td>{{ $servicio[12] }}</td> <!-- Email -->
+                        <td>{{ $servicio[4] }}</td> <!-- Hora -->                     
+                        <td>{{ $servicio[5] }}</td> <!-- Nombre del solicitante -->
+                        <td>{{ $servicio[6] }}</td> <!-- Apellido del solicitante -->
+                   
                     </tr>
                     @endforeach
                 </tbody>
@@ -83,6 +78,7 @@
          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
          <!-- <a href="" id="borrar" class="btn btn-danger">borrar</a> -->
          //<a href="" id="solicitar" class="btn btn-danger">Agregar</a>
+         
         
        </div>
      </div>

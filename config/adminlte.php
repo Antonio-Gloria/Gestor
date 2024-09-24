@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Gestor</b>SERVICIOS',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -326,12 +326,17 @@ return [
         [
             'text' => 'Servicios',
             'url' => 'servicios/create',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-info',
         ],
         [
             'text' => 'change_password',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
+            'text' => 'Tipo de servicios',
+            'url' => 'tiposervicios',
+            'icon' => 'fas fa-fw fa-info',
         ],
         [
             'text' => 'multilevel',

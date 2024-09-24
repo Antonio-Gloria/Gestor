@@ -147,7 +147,7 @@ $this->validate($request, [
             $tiposervicio->status = 0;
             $tiposervicio->update();
             return redirect()->route('tiposervicios.index')->with(array(
-                "message" => "El tipo de servicio sellecionado se ha eliminado correctamente"
+                "message" => "El tipo de servicio seleccionado se ha eliminado correctamente"
             ));
         } else {
             return redirect()->route('tiposervicios.index')->with(array(

@@ -13,14 +13,6 @@ class ServicioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index2()
-    {
-//Muestra los registros de la tabla
-       $vs_servicios = Servicio::where('status', '=', 1)->get();
-       $servicios = $this->cargarDT($vs_servicios);
-       return view('servicio.index2', compact('servicios')); 
-
-    }
 
     public function index()
     {
@@ -35,26 +27,39 @@ class ServicioController extends Controller
 {
     // Muestra los registros de la tabla con la relación 'tipoServicio' cargada
     $vs_servicios = Servicio::with('tipoServicio')->where('status', '=', 2)->get();
-    $servicios = $this->cargarDT2($vs_servicios);
-        
+    $servicios = $this->cargarDT1($vs_servicios);
     return view('servicio.realizado', compact('servicios'));
 }
 
-public function cargarDT($consulta)
+    public function info()
+    {
+        $vs_servicios = Servicio:: with('tipoServicio')->where( 'status', '=', 1)->get();
+       $servicios = $this->cargarDT2($vs_servicios);
+       return view('servicio.info', compact( 'servicios'));
+    }
+
+
+
+
+public function cargarDT($consulta) //index
 {
     $servicios = [];
     foreach ($consulta as $key => $value) {
         $ruta = "eliminar" . $value['id'];
         $eliminar = route('delete-servicio', $value['id']);
         $realizado = route('realizado-servicio', $value['id']);
+        $info = route('info-servicio', $value['id']);
         $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
                     <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
-                        <i class="far fa-envelope"></i>
+                        <i class="fas fa-fw fa-check"></i>
                     </a>
                     <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="far fa-trash-alt"></i>
+                    </a>
+                    <a href="' . $info . '" role="button" class="btn btn-info" title="Más información" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fas fa-fw fa-info"></i>
                     </a>
                 </div>
             </div>
@@ -63,7 +68,59 @@ public function cargarDT($consulta)
         $servicios[$key] = array(
             $acciones,
             $value['id'],
-            $value->tipoServicio->nombre, // Cambiar aquí
+            $value->tipoServicio->nombre,
+            $value['fecha'],
+            $value['hora'],
+            $value['nombre_solicitante'],
+            $value['apellido_solicitante'],
+        );
+    }
+
+    return $servicios;
+}
+
+public function cargarDT1($consulta)   //realizado
+{
+    $servicios = [];
+    foreach ($consulta as $key => $value) {
+        $ruta = "eliminar" . $value['id'];
+        $eliminar = route('delete-servicio', $value['id']);
+        $info = route('info-servicio', $value['id']);
+        $acciones = '
+            <div class="btn-acciones">
+                <div class="btn-circle">
+                    
+                    <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                    <a href="' . $info . '" role="button" class="btn btn-info" title="Más información" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fas fa-fw fa-info"></i>
+                    </a>
+                </div>
+            </div>
+        ';
+
+        $servicios[$key] = array(
+            $acciones,
+            $value['id'],
+            $value->tipoServicio->nombre,
+            $value['fecha'],
+            $value['hora'],
+            $value['nombre_solicitante'],
+            $value['apellido_solicitante'],
+        );
+    }
+
+    return $servicios;
+}
+
+public function cargarDT2($consulta)    //Más información
+{
+    $servicios = [];
+    foreach ($consulta as $key => $value) {
+        $servicios[$key] = array(
+            $value['id'],
+            $value->tipoServicio->nombre, 
             $value['fecha'],
             $value['hora'],
             $value['estado'],
@@ -73,48 +130,13 @@ public function cargarDT($consulta)
             $value['codigo'],
             $value['contacto'],
             $value['tipo'],
-            $value['email'],
+            $value['email']
         );
     }
 
     return $servicios;
 }
-
-public function cargarDT2($consulta)
-{
-    $servicios = [];
-    foreach ($consulta as $key => $value) {
-        $ruta = "eliminar" . $value['id'];
-        $eliminar = route('delete-servicio', $value['id']);
-        $realizado = route('realizado-servicio', $value['id']);
-        $acciones = '
-            <div class="btn-acciones">
-                <div class="btn-circle">
-                    <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
-                        <i class="far fa-envelope"></i>
-                    </a>
-                    <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="far fa-trash-alt"></i>
-                    </a>
-                </div>
-            </div>
-        ';
-
-        $servicios[$key] = array(
-            $acciones,
-            $value['id'],
-            $value->tipoServicio->nombre, // Solo incluir el nombre
-            $value['fecha'],
-            $value['estado'], // Solo incluir el estado
-            // No incluir otros campos
-        );
-    }
-
-    return $servicios;
-}
-
-
-   
+  
     /**
      * Show the form for creating a new resource.
      */
@@ -164,12 +186,9 @@ public function cargarDT2($consulta)
     
         // Enviar el correo de confirmación
         Mail::to($servicio->email)->send(new ServicioSolicitado($servicio));
-    
-        //return redirect()->route('servicios.index2')->with(array(
-            //'message' => 'El servicio solicitado se ha agregado y se ha enviado un correo de confirmación.'
-
+   
              return redirect()->route('servicios.create')->with(array(
-                "message" => "Servicio realizado"
+                "message" => "Servicio solicitado exitosamente, se te ha enviado un correo con tu servicio solicitado"
         ));
     }
     

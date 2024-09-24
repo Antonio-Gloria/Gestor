@@ -20,7 +20,7 @@
            <hr>
            <br>
            <p align="right">
-               <a href="{{ route('tiposervicios.create') }}" class="btn btn-success">Crear un nuevo tipo de servicio</a>
+               <a href="{{ route('tiposervicios.create') }}" class="btn btn-success">Agregar un nuevo tipo de servicio</a>
                <a href="{{ route('home') }}" class="btn btn-primary">
                    Regresar
                </a>

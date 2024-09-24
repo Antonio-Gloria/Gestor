@@ -3,6 +3,14 @@
 
 @section('content') 
 <!-- Inicia la sección de contenido que se ubicará en la vista extendida -->
+<div class="row">
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+</div>
+
 
     <div class="container-sm">
         <!-- Crea un contenedor pequeño para que el contenido esté centrado y con márgenes adecuados -->
@@ -106,8 +114,8 @@
                 
                 <!-- Botones de acción: cancelar y agregar nuevo servicio -->
                 <a href="{{ route('home') }}" type="submit" class="btn btn-danger">Cancelar</a>
-                <button type="submit" class="btn btn-success">Agregar nuevo servicio</button>
-                <a href="" id="borrar" class="btn btn-danger">borrar</a>
+                <button type="submit" class="btn btn-success">Solicitar servicio</button>
+               
                 
             </form> <!-- Cierre del formulario -->
 
