@@ -45,6 +45,8 @@ Route::get('/info-servicio', [ServicioController::class, 'info'])->name('info-se
 
 Route::get('/servicio/info/{id}', [ServicioController::class, 'info'])->name('servicio.info');
 
+Route::get('/servicio/info/{id}', [ServicioController::class, 'infoServicio'])->name('info-servicio');
+
 
 
 

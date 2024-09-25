@@ -217,5 +217,3 @@ function modal(parametro){
    //"columnDefs": [{ type: 'portugues', targets: "_all" }],
 </script>
 @endsection
-
-

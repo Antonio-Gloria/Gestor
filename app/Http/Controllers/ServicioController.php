@@ -31,12 +31,20 @@ class ServicioController extends Controller
     return view('servicio.realizado', compact('servicios'));
 }
 
-    public function info()
-    {
-        $vs_servicios = Servicio:: with('tipoServicio')->where( 'status', '=', 1)->get();
-       $servicios = $this->cargarDT2($vs_servicios);
-       return view('servicio.info', compact( 'servicios'));
+    public function infoServicio($id)
+{
+    // Obtener el servicio seleccionado usando el ID
+    $servicio = Servicio::with('tipoServicio')->find($id);
+    
+    // Verificar si el servicio existe
+    if (!$servicio) {
+        return redirect()->route('servicios.index')->with('error', 'El servicio no existe.');
     }
+
+    // Retornar la vista con la información del servicio
+    return view('servicio.info', compact('servicio'));
+}
+
 
 
 
@@ -108,29 +116,6 @@ public function cargarDT1($consulta)   //realizado
             $value['hora'],
             $value['nombre_solicitante'],
             $value['apellido_solicitante'],
-        );
-    }
-
-    return $servicios;
-}
-
-public function cargarDT2($consulta)    //Más información
-{
-    $servicios = [];
-    foreach ($consulta as $key => $value) {
-        $servicios[$key] = array(
-            $value['id'],
-            $value->tipoServicio->nombre, 
-            $value['fecha'],
-            $value['hora'],
-            $value['estado'],
-            $value['nombre_solicitante'],
-            $value['apellido_solicitante'],
-            $value['departamento'],
-            $value['codigo'],
-            $value['contacto'],
-            $value['tipo'],
-            $value['email']
         );
     }
 
