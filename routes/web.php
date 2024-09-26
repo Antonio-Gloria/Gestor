@@ -47,6 +47,10 @@ Route::get('/servicio/info/{id}', [ServicioController::class, 'info'])->name('se
 
 Route::get('/servicio/info/{id}', [ServicioController::class, 'infoServicio'])->name('info-servicio');
 
+Route::post('/servicio/realizar', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio');
+
+Route::post('/realizar-servicio', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio');
+
 
 
 

@@ -16,7 +16,7 @@
         <!-- Crea un contenedor pequeño para que el contenido esté centrado y con márgenes adecuados -->
         <div class="container-fluid">
             <div></div> <!-- Div vacío, tal vez reservado para algún futuro contenido o diseño -->
-            <h2>Solicitar un nuevo servicio</h2> <!-- Título principal de la página -->
+            <h2>Solicitar un servicio</h2> <!-- Título principal de la página -->
             <hr> <!-- Línea horizontal que separa el título del contenido -->
 
             <!-- Formulario para solicitar un nuevo servicio -->
@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label for="tipo_servicio_id">Tipo de servicio</label>
                     <select class="form-control" id="tipo_servicio_id" name="tipo_servicio_id" required>
-                        <option value="" disabled selected>Selecciona un tipo de servicio</option>
+                        <option value="" disabled selected>Selecciona el tipo de servicio que necesitas</option>
                         @foreach($tipoServicios as $tipoServicio)
                             <!-- Recorre los tipos de servicios disponibles y crea una opción para cada uno -->
                             <option value="{{ $tipoServicio->id }}">{{ $tipoServicio->nombre }}</option>

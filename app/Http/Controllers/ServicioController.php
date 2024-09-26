@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ServicioSolicitado;
+use App\Mail\ServicioRealizado;
 use App\Models\Servicio;
 use App\Models\TipoServicio;
 use Illuminate\Http\Request;
@@ -25,29 +26,54 @@ class ServicioController extends Controller
 
     public function realizado()
 {
-    // Muestra los registros de la tabla con la relación 'tipoServicio' cargada
+    
     $vs_servicios = Servicio::with('tipoServicio')->where('status', '=', 2)->get();
     $servicios = $this->cargarDT1($vs_servicios);
     return view('servicio.realizado', compact('servicios'));
 }
 
+public function realizarServicio(Request $request)
+{
+
+    $servicio = Servicio::find($request->servicioId);
+
+    if (!$servicio) {
+        return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
+    }
+
+    $servicio->status = 2; 
+    $servicio->save();
+
+    if ($servicio->tiposervicio) {
+        $tipoServicioNombre = $servicio->tiposervicio->nombre; 
+    } else {
+        return redirect()->route('servicios.index')->with('error', 'Tipo de servicio no encontrado.');
+    }
+
+    $data = [
+        'tipo_servicio' => $tipoServicioNombre,
+        'nombre_solicitante' => $servicio->nombre_solicitante,
+        'apellido_solicitante' => $servicio->apellido_solicitante,
+        'fecha' => $servicio->fecha,
+        'descripcion' => $request->descripcion,
+    ];
+
+    Mail::to($servicio->email)->send(new ServicioRealizado($data));
+
+    return redirect()->route('servicios.index')->with('message', 'Servicio realizado y correo enviado.');
+}
+
     public function infoServicio($id)
 {
-    // Obtener el servicio seleccionado usando el ID
+
     $servicio = Servicio::with('tipoServicio')->find($id);
     
-    // Verificar si el servicio existe
     if (!$servicio) {
         return redirect()->route('servicios.index')->with('error', 'El servicio no existe.');
     }
 
-    // Retornar la vista con la información del servicio
     return view('servicio.info', compact('servicio'));
 }
-
-
-
-
 
 public function cargarDT($consulta) //index
 {
@@ -55,23 +81,24 @@ public function cargarDT($consulta) //index
     foreach ($consulta as $key => $value) {
         $ruta = "eliminar" . $value['id'];
         $eliminar = route('delete-servicio', $value['id']);
-        $realizado = route('realizado-servicio', $value['id']);
+        $realizado = 'javascript:void(0);" onclick="openRealizadoModal(' . $value['id'] . ')"';
         $info = route('info-servicio', $value['id']);
         $acciones = '
-            <div class="btn-acciones">
-                <div class="btn-circle">
-                    <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
-                        <i class="fas fa-fw fa-check"></i>
-                    </a>
-                    <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="far fa-trash-alt"></i>
-                    </a>
-                    <a href="' . $info . '" role="button" class="btn btn-info" title="Más información" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="fas fa-fw fa-info"></i>
-                    </a>
-                </div>
+        <div class="btn-acciones">
+            <div class="btn-circle">
+                <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
+                    <i class="fas fa-fw fa-check"></i>
+                </a>
+                <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="far fa-trash-alt"></i>
+                </a>
+                <a href="' . $info . '" role="button" class="btn btn-info" title="Más información" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fas fa-fw fa-info"></i>
+                </a>
             </div>
-        ';
+        </div>
+    ';
+    
 
         $servicios[$key] = array(
             $acciones,
@@ -121,10 +148,7 @@ public function cargarDT1($consulta)   //realizado
 
     return $servicios;
 }
-  
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         
@@ -132,10 +156,6 @@ public function cargarDT1($consulta)   //realizado
         return view('servicio.create', compact('tipoServicios'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-      
     Public function store(Request $request)
     {
         //validación de campos requeridos
@@ -169,11 +189,10 @@ public function cargarDT1($consulta)   //realizado
     
         $servicio->save();
     
-        // Enviar el correo de confirmación
         Mail::to($servicio->email)->send(new ServicioSolicitado($servicio));
    
              return redirect()->route('servicios.create')->with(array(
-                "message" => "Servicio solicitado exitosamente, se te ha enviado un correo con tu servicio solicitado"
+                "message" => "Servicio solicitado exitosamente, se te ha enviado un correo con los datos del servicio que solicitaste"
         ));
     }
     
@@ -227,19 +246,5 @@ public function cargarDT1($consulta)   //realizado
         
     }
 
-    public function realizado_servicio($servicio_id)
-    {
-        $servicio = Servicio::find($servicio_id);
-        if ($servicio) {
-            $servicio->status = 2;
-            $servicio->update();
-            return redirect()->route('servicios.index')->with(array(
-                "message" => "Servicio realizado"
-            ));
-        } else {
-            return redirect()->route('servicios.index')->with(array(
-                "message" => "Este servicio ya no existe"
-            ));
-        }
-    }
+    
 }

@@ -15,8 +15,7 @@ class TecnicoController extends Controller
 //Muestra los registros de la tabla
        $vs_tecnicos = Tecnico::where('status', '=', 1)->get();
        $tecnicos = $this->cargarDT($vs_tecnicos);
-       return view('tecnico.index', compact('tecnicos')); //->with('tiposervicios', $tiposervicios);
-
+       return view('tecnico.index', compact('tecnicos')); 
     }
 
     public function cargarDT($consulta)

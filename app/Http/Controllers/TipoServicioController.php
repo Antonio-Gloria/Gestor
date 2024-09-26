@@ -15,9 +15,7 @@ class TipoServicioController extends Controller
 //Muestra los registros de la tabla
        $vs_tiposervicios = TipoServicio::where('status', '=', 1)->get();
        $tiposervicios = $this->cargarDT($vs_tiposervicios);
-       return view('tiposervicio.index', compact('tiposervicios')); //->with('tiposervicios', $tiposervicios);
-
-
+       return view('tiposervicio.index', compact('tiposervicios')); 
     }
 
     public function cargarDT($consulta)
@@ -128,7 +126,7 @@ $this->validate($request, [
 
         $tiposervicio->save();
         return redirect()->route('tiposervicios.index')->with(array(
-            'message' => 'El tipo de servicio selleccionado se ha actualizado correctamente'
+            'message' => 'El tipo de servicio seleccionado se ha actualizado correctamente'
         ));
     }
 
