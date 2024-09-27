@@ -49,7 +49,10 @@
                         @endforeach
                     </select>
                 </div>
-
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}" />
+                </div>
                 <!-- Campos para ingresar fecha y hora -->
                 <div class="container px-4 text-center">
                     <div class="row gx-5">
@@ -65,14 +68,6 @@
                       </div>
                     </div>
                 </div>
-
-                <!-- Campo para el estado del servicio -->
-                <div class="form-group">
-                    <label for="estado">Estado</label>
-                    <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}" />
-                </div>
-
-                <!-- Campos para el nombre y apellido del solicitante -->
                 <div class="container px-4 text-center">
                     <div class="row gx-5">
                       <div class="col">
@@ -94,6 +89,10 @@
                     <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}" />
                 </div>
                 <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <input type="text" class="form-control" id="tipo" name="tipo" value="{{ old('tipo') }}" />
+                </div>
+                <div class="form-group">
                     <label for="codigo">Código</label>
                     <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}" />
                 </div>
@@ -101,12 +100,6 @@
                     <label for="contacto">Contacto</label>
                     <input type="text" class="form-control" id="contacto" name="contacto" value="{{ old('contacto') }}" />
                 </div>
-                <div class="form-group">
-                    <label for="tipo">Tipo</label>
-                    <input type="text" class="form-control" id="tipo" name="tipo" value="{{ old('tipo') }}" />
-                </div>
-
-                <!-- Campo para el email del solicitante -->
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required />
@@ -138,6 +131,7 @@
             
             // Establecer el valor del campo de entrada de la hora con la hora actual
             horaInput.value = currentTime;
+            
         });
     </script>
 

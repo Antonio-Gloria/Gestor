@@ -10,5 +10,7 @@
     <p>Apellido del Solicitante: {{ $data['apellido_solicitante'] }}</p>
     <p>Fecha: {{ $data['fecha'] }}</p>
     <p>Descripción: {{ $data['descripcion'] }}</p>
+    <p>Tecnico: {{$data['tecnico']}} </p>
 </body>
+
 </html>

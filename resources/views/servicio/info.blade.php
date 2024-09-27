@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
+
 @endsection
 
 @section('content')
@@ -42,7 +43,27 @@
             <th>Email:</th>
             <td>{{ $servicio->email }}</td>
         </tr>
-        <!-- Agregar más información según sea necesario -->
+        <tr>
+            <th>Tipo:</th>
+            <td>{{ $servicio->tipo }}</td>
+        </tr>
+        <tr>
+            <th>Tecnico:</th>
+            <td>
+                @if($servicio->tecnico)
+                    {{ $servicio->tecnico->nombre }}
+                @else
+                    No asignado
+                @endif
+            </td>
+        </tr>
+        
+        <tr>
+            <th>Descripción:</th>
+            <td>{{ $data['descripcion'] ?? 'No hay descripción disponible' }}</td>
+        </tr>
+        
+        
     </table>
 
     <p align="right">

@@ -2,8 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="{{asset('build/assets/app.js')}}"></script>
+
 @endsection
 @section('content')
    <div class="container">
@@ -71,7 +70,7 @@
        </div>
        <div class="modal-footer">
          
-         //<a href="" id="solicitar" class="btn btn-danger">Agregar</a>
+         <a href="" id="solicitar" class="btn btn-danger">Agregar</a>
         
        </div>
      </div>

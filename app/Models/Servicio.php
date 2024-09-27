@@ -29,6 +29,11 @@ class Servicio extends Model
     {
         return $this->belongsTo(TipoServicio::class, 'tipo_servicio_id');
     }
-      
+
+    public function tecnico()
+    {
+        return $this->belongsTo( Tecnico::class, 'tecnico_id');
+    }
+   
     
 }

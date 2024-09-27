@@ -6,6 +6,7 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="{{asset('build/assets/app.js')}}"></script>
+
 @endsection
 @section('content')
    <div class="container">
@@ -41,6 +42,7 @@
                        <th>Hora</th>
                        <th>Nombre del solicitante</th>
                        <th>Apellido del solicitante</th>
+                       <th>Tipo</th>
                        
                    </tr>
                </thead>
@@ -54,6 +56,7 @@
                         <td>{{ $servicio[4] }}</td> <!-- Hora -->                     
                         <td>{{ $servicio[5] }}</td> <!-- Nombre del solicitante -->
                         <td>{{ $servicio[6] }}</td> <!-- Apellido del solicitante -->
+                        <td>{{ $servicio[7] }}</td>
                         
                     </tr>
                     @endforeach
@@ -86,6 +89,16 @@
                     <div class="form-group">
                         <label for="descripcion">Descripción:</label>
                         <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
+                          <div class="form-group">
+                    <label for="tipo_servicio_id">Tecnico</label>
+                    <select class="form-control" id="tecnico_id" name="tecnico_id" required>
+                        <option value="" disabled selected>Asigna un tecnico</option>
+                        @foreach($tecnicos as $tecnico)
+                            <!-- Recorre los tecnicos disponibles y crea una opción para cada uno -->
+                            <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
                     </div>
                 </div>
                 <div class="modal-footer">

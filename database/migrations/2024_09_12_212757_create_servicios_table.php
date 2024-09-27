@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            //$table->unsignedBigInteger('tipo_servicio_id');
             $table->foreignId('tipo_servicio_id')->constrained('tipo_servicios');
             $table->date('fecha');
             $table->time('hora');

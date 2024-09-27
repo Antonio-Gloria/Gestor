@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ServicioSolicitado;
 use App\Mail\ServicioRealizado;
 use App\Models\Servicio;
+use App\Models\Tecnico;
 use App\Models\TipoServicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -20,7 +21,8 @@ class ServicioController extends Controller
 //Muestra los registros de la tabla
        $vs_servicios = Servicio::with( 'tipoServicio')->where('status', '=', 1)->get();
        $servicios = $this->cargarDT($vs_servicios);
-       return view('servicio.index', compact('servicios')); 
+       $tecnicos = Tecnico::all();
+       return view('servicio.index', compact('servicios', 'tecnicos')); 
 
     }
 
@@ -34,46 +36,71 @@ class ServicioController extends Controller
 
 public function realizarServicio(Request $request)
 {
-
+    // Buscar el servicio por ID
     $servicio = Servicio::find($request->servicioId);
-
     if (!$servicio) {
         return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
     }
 
-    $servicio->status = 2; 
+    // Cambiar el estado del servicio
+    $servicio->status = 2;
+
+    // Asignar el técnico al servicio
+    $tecnico = Tecnico::find($request->tecnico_id);
+    if ($tecnico) {
+        $servicio->tecnico_id = $tecnico->id; // Guardar el ID del técnico
+    } else {
+        return redirect()->route('servicios.index')->with('error', 'Técnico no encontrado.');
+    }
+
+    // Guardar el servicio actualizado
     $servicio->save();
 
+    // Verificar si el servicio tiene tipo de servicio asignado
     if ($servicio->tiposervicio) {
-        $tipoServicioNombre = $servicio->tiposervicio->nombre; 
+        $tipoServicioNombre = $servicio->tiposervicio->nombre;
     } else {
         return redirect()->route('servicios.index')->with('error', 'Tipo de servicio no encontrado.');
     }
 
+    // Guardar la descripción en la sesión
+    $request->session()->put('descripcion', $request->descripcion);
+
+    // Preparar los datos para enviar el correo
     $data = [
         'tipo_servicio' => $tipoServicioNombre,
         'nombre_solicitante' => $servicio->nombre_solicitante,
         'apellido_solicitante' => $servicio->apellido_solicitante,
         'fecha' => $servicio->fecha,
         'descripcion' => $request->descripcion,
+        'tecnico' => $tecnico->nombre, // Nombre del técnico elegido
     ];
 
+    // Enviar correo con los detalles del servicio realizado
     Mail::to($servicio->email)->send(new ServicioRealizado($data));
 
+    // Redirigir con un mensaje de éxito
     return redirect()->route('servicios.index')->with('message', 'Servicio realizado y correo enviado.');
 }
 
-    public function infoServicio($id)
-{
 
+
+
+public function infoServicio($id, Request $request)
+{
     $servicio = Servicio::with('tipoServicio')->find($id);
-    
     if (!$servicio) {
         return redirect()->route('servicios.index')->with('error', 'El servicio no existe.');
     }
 
-    return view('servicio.info', compact('servicio'));
+    // Recuperar la descripción de la sesión
+    $data = [
+        'descripcion' => $request->session()->get('descripcion', 'No hay descripción disponible')
+    ];
+
+    return view('servicio.info', compact('servicio', 'data'));
 }
+
 
 public function cargarDT($consulta) //index
 {
@@ -108,6 +135,7 @@ public function cargarDT($consulta) //index
             $value['hora'],
             $value['nombre_solicitante'],
             $value['apellido_solicitante'],
+            $value['tipo'],
         );
     }
 
