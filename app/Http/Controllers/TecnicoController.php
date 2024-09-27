@@ -13,7 +13,7 @@ class TecnicoController extends Controller
     public function index()
     {
 //Muestra los registros de la tabla
-       $vs_tecnicos = Tecnico::where('status', '=', 1)->get();
+       $vs_tecnicos = Tecnico::get();
        $tecnicos = $this->cargarDT($vs_tecnicos);
        return view('tecnico.index', compact('tecnicos')); 
     }
@@ -81,11 +81,10 @@ $this->validate($request, [
         $tecnico->apellido = $request->input('apellido');
         $tecnico->email = $request->input('email');
         $tecnico->telefono = $request->input('telefono');
-        $tecnico->status = 1;
 
         $tecnico->save();
         return redirect()->route('tecnicos.index')->with(array(
-            'message' => 'El tecnico se ha agregado correctamente'
+            'message' => 'El técnico se ha agregado correctamente'
         ));
 }
 

@@ -90,9 +90,9 @@
                         <label for="descripcion">Descripción:</label>
                         <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
                           <div class="form-group">
-                    <label for="tipo_servicio_id">Tecnico</label>
+                    <label for="tipo_servicio_id">Técnico</label>
                     <select class="form-control" id="tecnico_id" name="tecnico_id" required>
-                        <option value="" disabled selected>Asigna un tecnico</option>
+                        <option value="" disabled selected>Asigna un técnico</option>
                         @foreach($tecnicos as $tecnico)
                             <!-- Recorre los tecnicos disponibles y crea una opción para cada uno -->
                             <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>

@@ -21,6 +21,10 @@ Route::resource('/tiposervicios', App\Http\Controllers\TipoServicioController::c
     ->except(['show'])
     ->middleware('auth');
 
+Route::resource('/tecnicos', App\Http\Controllers\TecnicoController::class)
+    ->except(['show'])
+    ->middleware('auth');
+
 Route::get('delete-tiposervicio/{tiposervicio_id}',[
         'as' => 'delete-tiposervicio',
         'middleware' => 'auth',

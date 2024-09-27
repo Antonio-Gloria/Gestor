@@ -48,7 +48,8 @@ public function realizarServicio(Request $request)
     // Asignar el técnico al servicio
     $tecnico = Tecnico::find($request->tecnico_id);
     if ($tecnico) {
-        $servicio->tecnico_id = $tecnico->id; // Guardar el ID del técnico
+        $servicio->tecnico_id = $tecnico->id;
+         // Guardar el ID del técnico
     } else {
         return redirect()->route('servicios.index')->with('error', 'Técnico no encontrado.');
     }
@@ -197,7 +198,7 @@ public function cargarDT1($consulta)   //realizado
             'departamento' => 'required',
             'codigo' => 'required',
             'contacto' => 'required',
-            'tipo' => 'required',
+            'tipo' => 'required|in:Profesor,Alumno',
             'email' => 'required|email', 
         ]);
     

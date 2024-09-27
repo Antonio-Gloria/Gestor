@@ -50,7 +50,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="estado">Estado</label>
+                    <label for="estado">Estado del servicio solicitado</label>
                     <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}" />
                 </div>
                 <!-- Campos para ingresar fecha y hora -->
@@ -82,15 +82,24 @@
                       </div>
                     </div>
                 </div>
-
-                <!-- Otros campos de información adicional -->
-                <div class="form-group">
-                    <label for="departamento">Departamento</label>
-                    <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}" />
-                </div>
                 <div class="form-group">
                     <label for="tipo">Tipo</label>
-                    <input type="text" class="form-control" id="tipo" name="tipo" value="{{ old('tipo') }}" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo" id="profesor" value="Profesor" required>
+                        <label class="form-check-label" for="profesor">
+                            Profesor
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipo" id="alumno" value="Alumno" required>
+                        <label class="form-check-label" for="alumno">
+                            Alumno
+                        </label>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label for="departamento">Departamento (Carrera)</label>
+                    <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}" />
                 </div>
                 <div class="form-group">
                     <label for="codigo">Código</label>

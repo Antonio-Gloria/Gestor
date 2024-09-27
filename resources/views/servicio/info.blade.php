@@ -48,7 +48,7 @@
             <td>{{ $servicio->tipo }}</td>
         </tr>
         <tr>
-            <th>Tecnico:</th>
+            <th>Técnico:</th>
             <td>
                 @if($servicio->tecnico)
                     {{ $servicio->tecnico->nombre }}
