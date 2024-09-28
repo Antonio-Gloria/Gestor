@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('tipo', 50);
             $table->integer('status');
             $table->string('email');
+            //$table->string( 'descripcion', 350)->nullable();
             $table->timestamps();
     
             //$table->foreign('tipo_servicio_id')->references('id')->on('tipo_servicios')->onDelete('cascade');

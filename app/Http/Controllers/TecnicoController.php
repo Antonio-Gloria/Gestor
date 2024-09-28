@@ -102,7 +102,10 @@ $this->validate($request, [
      */
     public function edit(string $id)
     {
-        //
+        $tecnico = Tecnico::findOrFail($id);
+        return view('tecnico.edit', array(
+            'tecnico' => $tecnico
+        ));
     }
 
     /**
@@ -110,7 +113,23 @@ $this->validate($request, [
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'email' => 'required',
+            'telefono' => 'required',
+        ]);
+
+        $tecnico = Tecnico::findOrFail($id);
+        $tecnico->nombre = $request->input('nombre');
+        $tecnico->apellido = $request->input('apellido');
+        $tecnico->email = $request->input('email');
+        $tecnico->telefono = $request->input('telefono');
+
+        $tecnico->save();
+        return redirect()->route('tecnicos.index')->with(array(
+            'message' => 'El técnico seleccionado se ha actualizado correctamente'
+        ));
     }
 
     /**
@@ -119,5 +138,21 @@ $this->validate($request, [
     public function destroy(string $id)
     {
         //
+    }
+
+    public function delete_tecnico($tecnico_id)
+    {
+        $tecnico = Tecnico::find($tecnico_id);
+        if ($tecnico) {
+            $tecnico->status = 0;
+            $tecnico->update();
+            return redirect()->route('tecnicos.index')->with(array(
+                "message" => "El técnico seleccionado se ha eliminado correctamente"
+            ));
+        } else {
+            return redirect()->route('tecnicos.index')->with(array(
+                "message" => "El técnico que trata de eliminar no existe"
+            ));
+        }
     }
 }

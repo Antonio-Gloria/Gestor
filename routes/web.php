@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ServicioController;
-use App\Models\Servicio;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +30,12 @@ Route::get('delete-tiposervicio/{tiposervicio_id}',[
         'middleware' => 'auth',
         'uses'=> 'App\Http\Controllers\TipoServicioController@delete_tiposervicio'
     ]);
+
+Route::get('delete-tecnico/{tecnico_id}', [
+    'as' => 'delete-tecnico',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\TecnicoController@delete_tecnico'
+]);    
 
 Route::get('realizado-servicio/{servicio_id}',[
         'as' => 'realizado-servicio',

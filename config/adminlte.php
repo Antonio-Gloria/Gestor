@@ -329,15 +329,21 @@ return [
             'icon' => 'fas fa-fw fa-info',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
             'text' => 'Tipo de servicios',
             'url' => 'tiposervicios',
             'icon' => 'fas fa-fw fa-info',
         ],
+        [
+            'text' => 'Tecnicos',
+            'url' => 'tecnicos',
+            'icon' => 'fas fa-fw fa-info',
+        ],
+        [
+            'text' => 'change_password',
+            'url' => 'admin/settings',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        
         [
             'text' => 'multilevel',
             'icon' => 'fas fa-fw fa-share',
