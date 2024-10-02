@@ -1,45 +1,50 @@
 @extends('adminlte::page')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-
+<link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
-
-
-    <div class="container">
-        <div class="row">
-            <h2>Crear un nuevo servicio</h2>
-            <hr>
-            <form action="{{ route('tiposervicios.store') }}" method="post" enctype="multipart/form-data" class="col-lg-7">
-                @csrf
-                @method('POST')
-                <!-- Protección contra ataques ya implementado en laravel  https://www.welivesecurity.com/la-es/2015/04/21/vulnerabilidad-cross-site-request-forgery-csrf/-->
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Crear un Nuevo Servicio</h4>
                     </div>
-                @endif
+                    <div class="card-body">
+                        <form action="{{ route('tiposervicios.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
+                            
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" />
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ old('descripcion') }}" required>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ route('tiposervicios.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                                <button type="submit" class="btn btn-outline-success">Agregar Nuevo Tipo de Servicio</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ old('descripcion') }}" />
-                </div>
-               
-                <a href="{{ route('tiposervicios.index') }}" class="btn btn-danger">Cancelar</a>
-                <button type="submit" class="btn btn-success">Agregar nuevo tipo de servicio</button>
-            </form>
+            </div>
         </div>
     </div>
-
-
 @endsection

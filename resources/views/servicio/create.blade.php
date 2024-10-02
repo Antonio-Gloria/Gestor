@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
 @endsection
 
 @section('content') 
@@ -117,7 +117,7 @@
                 <!-- Botones de acción -->
                 <div class="d-flex justify-content-between mt-4">
                     <a href="{{ route('home') }}" class="btn btn-outline-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Solicitar servicio</button>
+                    <button type="submit" class="btn btn-outline-success">Solicitar servicio</button>
                 </div>
             </form>
         </div>
@@ -131,9 +131,7 @@
         var now = new Date();
         var hours = now.getHours().toString().padStart(2, '0');
         var minutes = now.getMinutes().toString().padStart(2, '0');
-        var currentTime = hours + ':' + minutes;
-        horaInput.value = currentTime;
+        horaInput.value = `${hours}:${minutes}`;
     });
 </script>
-
 @endsection

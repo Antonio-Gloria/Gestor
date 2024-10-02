@@ -27,11 +27,11 @@ class TipoServicioController extends Controller
            $acciones = '
           <div class="btn-acciones">
               <div class="btn-circle">
-                  <a href="' . $actualizar . '" role="button" class="btn btn-success" title="Actualizar">
+                  <a href="' . $actualizar . '" role="button" class="btn btn-outline-success" title="Actualizar">
                       <i class="far fa-edit"></i>
                   </a>
                   
-                   <a href="' . $eliminar . '" role="button" class="btn btn-danger"title="Eliminar" onclick="modal('.$value['id'].')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
+                   <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger"title="Eliminar" onclick="modal('.$value['id'].')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
                       <i class="far fa-trash-alt"></i>
                   </a>
               </div>

@@ -1,55 +1,61 @@
 @extends('adminlte::page')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-
+<link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2>Editar Técnico</h2>
+                <hr>
+            </div>
+        </div>
 
-    <div class="container">
-        <div class="row">
-            <h2>Editar técnico</h2>
-            <hr>
-            <form action="{{ route('tecnicos.update', $tecnico->id) }}" method="POST" enctype="multipart/form-data" class="col-lg-7">
+        <div class="card shadow">
+            <div class="card-body">
+                <form action="{{ route('tecnicos.update', $tecnico->id) }}" method="POST" enctype="multipart/form-data" class="col-lg-7">
+                    @csrf
+                    @method('PUT')
 
-                <!-- Protección contra ataques ya implementado en laravel  https://www.welivesecurity.com/la-es/2015/04/21/vulnerabilidad-cross-site-request-forgery-csrf/-->
-                @csrf
-                @method('PUT')
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div class="form-group mb-3">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $tecnico->nombre }}" required>
                     </div>
-                @endif
-
-
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $tecnico->nombre }}" />
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" name="apellido" value="{{ $tecnico->apellido }}" />
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ $tecnico->email }}">
+                    
+                    <div class="form-group mb-3">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido" value="{{ $tecnico->apellido }}" required>
                     </div>
-                    <div class="form-group">
-                        <label for="telefono">Telefono</label>
-                        <input type="number" class="form-control" id="telefono" name="telefono" value="{{ $tecnico->telefono }}">
+                    
+                    <div class="form-group mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $tecnico->email }}" required>
                     </div>
-                <a href="{{ route('tiposervicios.index') }}" class="btn btn-danger">Cancelar</a>
-                <button type="submit" class="btn btn-success">Actualizar datos del técnico</button>
-            </form>
+                    
+                    <div class="form-group mb-3">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" name="telefono" value="{{ $tecnico->telefono }}" required>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('tecnicos.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-outline-success">Actualizar Datos del Técnico</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
-
 @endsection

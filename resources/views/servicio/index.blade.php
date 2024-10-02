@@ -1,132 +1,114 @@
 @extends('adminlte::page')
 
 @section('css')
-
-<link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-
-
-
-<!-- app-DBdvkBoY.js  app-D-sv12UV.css -->
+<link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
 @endsection
+
 @section('content')
-   <div class="container">
-       <div class="row">
-           @if (session('message'))
-               <div class="alert alert-success">
-                   {{ session('message') }}
-               </div>
-           @endif
-       </div>
+    <div class="container">
+        <div class="row">
+            @if (session('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
+        <div class="row">
+            <h2 class="text">Lista de Servicios por Realizar</h2>
+            <hr>
+            <br>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('servicios.create') }}" class="btn btn-outline-success me-2">Solicitar Servicio</a>
+            <a href="{{ route('servicios.realizado') }}" class="btn btn-outline-info me-2">Ir a Servicios Realizados</a>
+            <a href="{{ route('home') }}" class="btn btn-outline-primary">Regresar</a>
+        </div>
 
-       <div class="container py-8">
-      
-        <h1 class="text-3xl font-bold text-red-500 shadow-lg text-center">Lista de Servicios por Realizar</h1>
-
-
-           <hr>
-           <br>
-           <p align="right">
-               <a href="{{ route('servicios.create') }}" class="btn btn-success">Solicitar servicio</a>
-               <a href="{{ route('servicios.realizado')}}" class="btn btn-info">Ir a servicios realizados</a>
-               <a href="{{ route('home') }}" class="btn btn-primary">
-                   Regresar
-               </a>
-           </p>
-           <table id="example" class="table table-striped table-bordered" style="width:100%">
-               <thead>
-                   <tr>
-                       <th>Acciones</th>
-                       <th>Id Servicio</th>
-                       <th>Tipo de servicio solicitado</th>
-                       <th>Fecha</th>
-                       <th>Hora</th>
-                       <th>Nombre del solicitante</th>
-                       <th>Apellido del solicitante</th>
-                       <th>Tipo</th>
-                       
-                   </tr>
-               </thead>
-               <tbody>
-                    @foreach($servicios as $servicio)
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Id Servicio</th>
+                    <th>Tipo de Servicio Solicitado</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Nombre del Solicitante</th>
+                    <th>Apellido del Solicitante</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($servicios as $servicio)
                     <tr>
-                        <td>{{ $servicio[0] }}</td> <!-- Acciones -->
-                        <td>{{ $servicio[1] }}</td> <!-- Id Servicio -->
-                        <td>{{ $servicio[2] }}</td> <!-- Tipo de servicio solicitado -->
-                        <td>{{ $servicio[3] }}</td> <!-- Fecha -->
-                        <td>{{ $servicio[4] }}</td> <!-- Hora -->                     
-                        <td>{{ $servicio[5] }}</td> <!-- Nombre del solicitante -->
-                        <td>{{ $servicio[6] }}</td> <!-- Apellido del solicitante -->
+                        <td>{{ $servicio[0] }}</td>
+                        <td>{{ $servicio[1] }}</td>
+                        <td>{{ $servicio[2] }}</td>
+                        <td>{{ $servicio[3] }}</td>
+                        <td>{{ $servicio[4] }}</td>
+                        <td>{{ $servicio[5] }}</td>
+                        <td>{{ $servicio[6] }}</td>
                         <td>{{ $servicio[7] }}</td>
-                        
                     </tr>
-                    @endforeach
+                @endforeach
+            </tbody>
+        </table>
 
-                </tbody>
-                <script>
-                    function openRealizadoModal(id) {
-                        document.getElementById('servicioId').value = id;
-                        var modal = new bootstrap.Modal(document.getElementById('modalRealizado'));
-                        modal.show();
-                    }
-                </script>
-                
-           </table>
-       </div>
-   </div>
-
-  
- <!-- Modal -->
- <div class="modal fade" id="modalRealizado" tabindex="-1" aria-labelledby="modalRealizadoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg">
-            <form action="{{ route('realizar-servicio') }}" method="POST" id="formRealizado">
-                @csrf
-                <div class="modal-header bg-dark text-white">
-                    <h5 class="modal-title" id="modalRealizadoLabel">
-                        <i class="fas fa-file-alt"></i> Detalles del Servicio Realizado
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body bg-light">
-                    <input type="hidden" id="servicioId" name="servicioId" value="">
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción del Servicio</label>
-                        <textarea class="form-control" id="descripcion" name="descripcion" rows="5" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tecnico_id" class="form-label">Asignar Técnico</label>
-                        <select class="form-select" id="tecnico_id" name="tecnico_id" required>
-                            <option value="" disabled selected>Selecciona un técnico</option>
-                            @foreach($tecnicos as $tecnico)
-                                <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer bg-dark text-white">
-                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i> Cerrar
-                    </button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-paper-plane"></i> Enviar
-                    </button>                    
-                </div>
-            </form>
+        <script>
+            function openRealizadoModal(id) {
+                document.getElementById('servicioId').value = id;
+                var modal = new bootstrap.Modal(document.getElementById('modalRealizado'));
+                modal.show();
+            }
+        </script>
         </div>
     </div>
-</div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalRealizado" tabindex="-1" aria-labelledby="modalRealizadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <form action="{{ route('realizar-servicio') }}" method="POST" id="formRealizado">
+                    @csrf
+                    <div class="modal-header bg-dark text-white">
+                        <h5 class="modal-title" id="modalRealizadoLabel">
+                            <i class="fas fa-file-alt"></i> Detalles del Servicio Realizado
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg-light">
+                        <input type="hidden" id="servicioId" name="servicioId" value="">
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción del Servicio</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="5" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tecnico_id" class="form-label">Asignar Técnico</label>
+                            <select class="form-select" id="tecnico_id" name="tecnico_id" required>
+                                <option value="" disabled selected>Selecciona un Técnico</option>
+                                @foreach ($tecnicos as $tecnico)
+                                    <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-dark text-white">
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Cerrar
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-paper-plane"></i> Enviar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
-
-
-
-
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
@@ -137,31 +119,15 @@
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
 <script>
-    $('#modalRealizado').on('hidden.bs.modal', function()
-{
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-})
-</script>
-<script type="text/javascript">
-    function modal(parametro) {
-        console.log(parametro);
-        $('#nombre').html(parametro);
-
-        let url = "{{ route('realizado-servicio', ':id') }}";
-        url = url.replace(':id', parametro);
-        document.getElementById('borrar').href = url;
-    }
-
-    var data = @json($servicios);
-
     $(document).ready(function() {
+        var data = @json($servicios);
+
         $('#example').DataTable({
-            data: data, 
-            pageLength: 100, 
-            order: [[0, "desc"]], 
-            responsive: true, 
-            dom: '<"row mb-3"<"col-lg-3"l><"col-lg-5"B><"col-lg-4"f>>rtip', 
+            data: data,
+            pageLength: 100,
+            order: [[0, "desc"]],
+            responsive: true,
+            dom: '<"row mb-3"<"col-lg-3"l><"col-lg-5"B><"col-lg-4"f>>rtip',
             buttons: [
                 'copy', 'excel', 
                 {
@@ -192,28 +158,10 @@
             }
         });
 
-        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-            "portugues-pre": function(data) {
-                var specialLetters = {
-                    "Á": "a", "á": "a", "Ã": "a", "ã": "a", "À": "a", "à": "a",
-                    "É": "e", "é": "e", "Ê": "e", "ê": "e", "Í": "i", "í": "i",
-                    "Î": "i", "î": "i", "Ó": "o", "ó": "o", "Õ": "o", "õ": "o",
-                    "Ô": "o", "ô": "o", "Ú": "u", "ú": "u", "Ü": "u", "ü": "u",
-                    "Ç": "c", "ç": "c"
-                };
-                for (var val in specialLetters) {
-                    data = data.split(val).join(specialLetters[val]).toLowerCase();
-                }
-                return data;
-            },
-            "portugues-asc": function(a, b) {
-                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-            },
-            "portugues-desc": function(a, b) {
-                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-            }
+        $('#modalRealizado').on('hidden.bs.modal', function() {
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
         });
     });
 </script>
-
 @endsection

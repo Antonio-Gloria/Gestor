@@ -109,13 +109,13 @@ public function cargarDT($consulta) //index
         $acciones = '
         <div class="btn-acciones">
             <div class="btn-circle">
-                <a href="javascript:void(0);" role="button" class="btn btn-success" title="Servicio realizado" data-bs-toggle="modal" data-bs-target="#modalRealizado" onclick="openRealizadoModal(' . $value['id'] . ')">
+                <a href="javascript:void(0);" role="button" class="btn btn-outline-success" title="Servicio realizado" data-bs-toggle="modal" data-bs-target="#modalRealizado" onclick="openRealizadoModal(' . $value['id'] . ')">
                     <i class="fas fa-fw fa-check"></i>
                 </a>
-                <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" >
+                <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
                     <i class="far fa-trash-alt"></i>
                 </a>
-                <a href="' . $info . '" role="button" class="btn btn-info" title="Más información">
+                <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">
                     <i class="fas fa-fw fa-info"></i>
                 </a>
             </div>
@@ -148,13 +148,12 @@ public function cargarDT1($consulta)   //realizado
         $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
-                    
-                    <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="far fa-trash-alt"></i>
-                    </a>
-                    <a href="' . $info . '" role="button" class="btn btn-info" title="Más información" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="fas fa-fw fa-info"></i>
-                    </a>
+                   <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
+                    <i class="far fa-trash-alt"></i>
+                </a>
+                     <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">
+                    <i class="fas fa-info"></i>
+                </a>
                 </div>
             </div>
         ';

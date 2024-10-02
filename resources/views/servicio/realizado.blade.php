@@ -1,30 +1,29 @@
 @extends('adminlte::page')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-
+<link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
 @endsection
-@section('content')
-   <div class="container">
-       <div class="row">
-           @if (session('message'))
-               <div class="alert alert-success">
-                   {{ session('message') }}
-               </div>
-           @endif
-       </div>
 
-       <div class="row">
-           <h2>Lista de servicios realizados</h2>
-           <hr>
-           <br>
-           <p align="right">
-              
-               <a href="{{ route('servicios.index') }}" class="btn btn-primary">
-                   Regresar
-               </a>
-           </p>
-           <table id="example" class="table table-striped table-bordered" style="width:100%">
+@section('content')
+<div class="container">
+    <div class="row">
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
+    <div class="row">
+        <h2 class="text-center">Lista de servicios realizados</h2>
+        <hr>
+        <br>
+        <p class="text-end">
+            <a href="{{ route('servicios.index') }}" class="btn btn-outline-primary">
+                Regresar
+            </a>
+        </p>
+        
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th>Acciones</th>
@@ -34,53 +33,46 @@
                     <th>Hora</th>
                     <th>Nombre del solicitante</th>
                     <th>Apellido del solicitante</th>
-                    
                 </tr>
             </thead>
             <tbody>
-                 @foreach($servicios as $servicio)
-                 <tr>
-                     <td>{{ $servicio[0] }}</td> <!-- Acciones -->
-                     <td>{{ $servicio[1] }}</td> <!-- Id Servicio -->
-                     <td>{{ $servicio[2] }}</td> <!-- Tipo de servicio solicitado -->
-                     <td>{{ $servicio[3] }}</td> <!-- Fecha -->
-                     <td>{{ $servicio[4] }}</td> <!-- Hora -->                     
-                     <td>{{ $servicio[5] }}</td> <!-- Nombre del solicitante -->
-                     <td>{{ $servicio[6] }}</td> <!-- Apellido del solicitante -->
-                
-                 </tr>
-                 @endforeach
-             </tbody>
+                @foreach($servicios as $servicio)
+                <tr>
+                    <td>{{ $servicio[0] }}</td> <!-- Acciones -->
+                    <td>{{ $servicio[1] }}</td> <!-- Id Servicio -->
+                    <td>{{ $servicio[2] }}</td> <!-- Tipo de servicio solicitado -->
+                    <td>{{ $servicio[3] }}</td> <!-- Fecha -->
+                    <td>{{ $servicio[4] }}</td> <!-- Hora -->
+                    <td>{{ $servicio[5] }}</td> <!-- Nombre del solicitante -->
+                    <td>{{ $servicio[6] }}</td> <!-- Apellido del solicitante -->
+                </tr>
+                @endforeach
+            </tbody>
         </table>
         
-       </div>
-   </div>
-  
- <!-- Modal -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-         <span id="nombre"></span>
-        
-       </div>
-       <div class="modal-footer">
-         
-         <a href="" id="solicitar" class="btn btn-danger">Agregar</a>
-        
-       </div>
-     </div>
-   </div>
- </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles del Servicio</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="nombre"></span>
+            </div>
+            <div class="modal-footer">
+                <a href="" id="solicitar" class="btn btn-danger">Agregar</a>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
-<!-- Button trigger modal -->
 
 @section('js')
-
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -100,7 +92,7 @@
 
         let url = "{{ route('realizado-servicio', ':id') }}";
         url = url.replace(':id', parametro);
-        document.getElementById('borrar').href = url;
+        document.getElementById('solicitar').href = url;
     }
 
     var data = @json($servicios);
@@ -165,5 +157,4 @@
         });
     });
 </script>
-
 @endsection

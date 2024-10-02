@@ -1,12 +1,11 @@
 @extends('adminlte::page')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-
+<link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
 @endsection
 
 @section('content')
-   <div class="container">
+   <div class="container mt-5">
        <div class="row">
            @if (session('message'))
                <div class="alert alert-success">
@@ -15,60 +14,59 @@
            @endif
        </div>
 
-       <div class="row">
-           <h2>Lista de tipo de servicios </h2>
-           <hr>
-           <br>
-           <p align="right">
-               <a href="{{ route('tiposervicios.create') }}" class="btn btn-success">Agregar un nuevo tipo de servicio</a>
-               <a href="{{ route('home') }}" class="btn btn-primary">
-                   Regresar
-               </a>
-           </p>
-           <table id="example" class="table table-striped table-bordered" style="width:100%">
-               <thead>
-                   <tr>
-                       <th>Acciones</th>
-                       <th>Id Tipo de servicio</th>
-                       <th>Nombre</th>
-                       <th>Descripción</th>            
-                   </tr>
-               </thead>
-               <tbody>
+       <div class="row mb-4">
+           <div class="col-12 d-flex justify-content-between align-items-center">
+               <h2>Lista de Tipos de Servicios</h2>
+               <div>
+                   <a href="{{ route('tiposervicios.create') }}" class="btn btn-outline-success">Agregar un Nuevo Tipo de Servicio</a>
+                   <a href="{{ route('home') }}" class="btn btn-outline-primary">Regresar</a>
+               </div>
+           </div>
+       </div>
 
-               </tbody>
-
-           </table>
+       <div class="card shadow">
+           <div class="card-body">
+               <table id="example" class="table table-striped table-bordered" style="width:100%">
+                   <thead>
+                       <tr>
+                           <th>Acciones</th>
+                           <th>Id Tipo de Servicio</th>
+                           <th>Nombre</th>
+                           <th>Descripción</th>            
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <!-- Los datos se cargarán dinámicamente aquí -->
+                   </tbody>
+               </table>
+           </div>
        </div>
    </div>
   
- <!-- Modal -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+   <!-- Modal -->
+   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Tipo de Servicio</h1>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                   <span id="nombre"></span>
+               </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                   <a href="" id="borrar" class="btn btn-danger">Borrar</a>
+               </div>
+           </div>
        </div>
-       <div class="modal-body">
-         <span id="nombre"></span>
-        
-       </div>
-       <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-         <a href="" id="borrar" class="btn btn-danger">borrar</a>
-        
-       </div>
-     </div>
    </div>
- </div>
 @endsection
 
 @section('js')
-
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -78,9 +76,7 @@
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
 <script type="text/javascript">
-    
     function modal(parametro) {
-        console.log(parametro);
         $('#nombre').html(parametro);
 
         let url = "{{ route('delete-tiposervicio', ':id') }}";
@@ -91,7 +87,6 @@
     var data = @json($tiposervicios);
 
     $(document).ready(function() {
-       
         $('#example').DataTable({
             data: data, 
             pageLength: 100, 
@@ -152,5 +147,4 @@
         });
     });
 </script>
-
 @endsection
