@@ -12,15 +12,14 @@ class TecnicoController extends Controller
      */
     public function index()
     {
-//Muestra los registros de la tabla
-       $vs_tecnicos = Tecnico::get();
+       $vs_tecnicos = Tecnico::where('status', '=', 1)->get();
        $tecnicos = $this->cargarDT($vs_tecnicos);
        return view('tecnico.index', compact('tecnicos')); 
     }
 
     public function cargarDT($consulta)
     {
-        $tecnico = [];
+        $tecnicos = [];
         foreach ($consulta as $key => $value) {
             $ruta = "eliminar" . $value['id'];
             $eliminar = route('delete-tecnico', $value['id']);
@@ -81,6 +80,7 @@ $this->validate($request, [
         $tecnico->apellido = $request->input('apellido');
         $tecnico->email = $request->input('email');
         $tecnico->telefono = $request->input('telefono');
+        $tecnico->status = 1;
 
         $tecnico->save();
         return redirect()->route('tecnicos.index')->with(array(

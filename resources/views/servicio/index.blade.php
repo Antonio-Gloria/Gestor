@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
 @section('css')
+
 <link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="{{asset('build/assets/app.js')}}"></script>
 
+
+<!-- app-DBdvkBoY.js  app-D-sv12UV.css -->
 @endsection
 @section('content')
    <div class="container">
@@ -75,35 +75,40 @@
    </div>
   
  <!-- Modal -->
-<div class="modal fade" id="modalRealizado" tabindex="-1" aria-labelledby="modalRealizadoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+ <div class="modal fade" id="modalRealizado" tabindex="-1" aria-labelledby="modalRealizadoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
             <form action="{{ route('realizar-servicio') }}" method="POST" id="formRealizado">
                 @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalRealizadoLabel">Descripción del Servicio Realizado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="modalRealizadoLabel">
+                        <i class="fas fa-file-alt"></i> Detalles del Servicio Realizado
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body bg-light">
                     <input type="hidden" id="servicioId" name="servicioId" value="">
-                    <div class="form-group">
-                        <label for="descripcion">Descripción:</label>
-                        <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
-                          <div class="form-group">
-                    <label for="tipo_servicio_id">Técnico</label>
-                    <select class="form-control" id="tecnico_id" name="tecnico_id" required>
-                        <option value="" disabled selected>Asigna un técnico</option>
-                        @foreach($tecnicos as $tecnico)
-                            <!-- Recorre los tecnicos disponibles y crea una opción para cada uno -->
-                            <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción del Servicio</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tecnico_id" class="form-label">Asignar Técnico</label>
+                        <select class="form-select" id="tecnico_id" name="tecnico_id" required>
+                            <option value="" disabled selected>Selecciona un técnico</option>
+                            @foreach($tecnicos as $tecnico)
+                                <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                <div class="modal-footer bg-dark text-white">
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-paper-plane"></i> Enviar
+                    </button>
                 </div>
             </form>
         </div>
@@ -111,135 +116,90 @@
 </div>
 
 @endsection
-<!-- Button trigger modal -->
 
+@section('js')
 
- @section('js')
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
-
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
 <script type="text/javascript">
-function modal(parametro){
-   console.log(parametro);
-   $('#nombre').html(parametro);
+   
+    function modal(parametro) {
+        console.log(parametro);
+        $('#nombre').html(parametro);
 
+        let url = "{{ route('realizado-servicio', ':id') }}";
+        url = url.replace(':id', parametro);
+        document.getElementById('borrar').href = url;
+    }
 
-   let url = "{{route('realizado-servicio', ':id')}}";
-   url = url.replace(':id',parametro);
-   document.getElementById('borrar').href= url;
-  
-}
-   var data = @json($servicios);
+    var data = @json($servicios);
 
-   $(document).ready(function() {
-       $('#example').DataTable({
-           "data": data,
-           "pageLength": 100,
-           "order": [
-               [0, "desc"]
-           ],
-           "language": {
-               "sProcessing": "Procesando...",
-               "sLengthMenu": "Mostrar _MENU_ registros",
-               "sZeroRecords": "No se encontraron resultados",
-               "sEmptyTable": "Ningún dato disponible en esta tabla",
-               "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-               "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-               "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-               "sInfoPostFix": "",
-               "sSearch": "Buscar:",
-               "sUrl": "",
-               "sInfoThousands": ",",
-               "sLoadingRecords": "Cargando...",
-               "oPaginate": {
-                   "sFirst": "Primero",
-                   "sLast": "Último",
-                   "sNext": "Siguiente",
-                   "sPrevious": "Anterior"
-               },
-               "oAria": {
-                   "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                   "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-               }
-           },
-           responsive: true,
-           dom: 'Bfrtip',
-           dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
-           buttons: [
-               'copy', 'excel',
-               {
-                   extend: 'pdfHtml5',
-                   orientation: 'landscape',
-                   pageSize: 'LETTER',
-               }
+    $(document).ready(function() {
+     
+        $('#example').DataTable({
+            data: data, 
+            pageLength: 100, 
+            order: [[0, "desc"]], 
+            responsive: true, 
+            dom: '<"row mb-3"<"col-lg-3"l><"col-lg-5"B><"col-lg-4"f>>rtip', 
+            buttons: [
+                'copy', 'excel', 
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LETTER'
+                }
+            ],
+            language: {
+                sProcessing: "Procesando...",
+                sLengthMenu: "Mostrar _MENU_ registros",
+                sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningún dato disponible en esta tabla",
+                sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sSearch: "Buscar:",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Último",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
+                },
+                oAria: {
+                    sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending: ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
 
-
-
-
-           ]
-       })
-
-
-
-
-   });
-
-
-
-
-   jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-       "portugues-pre": function(data) {
-           var a = 'a';
-           var e = 'e';
-           var i = 'i';
-           var o = 'o';
-           var u = 'u';
-           var c = 'c';
-           var special_letters = {
-               "Á": a,
-               "á": a,
-               "Ã": a,
-               "ã": a,
-               "À": a,
-               "à": a,
-               "É": e,
-               "é": e,
-               "Ê": e,
-               "ê": e,
-               "Í": i,
-               "í": i,
-               "Î": i,
-               "î": i,
-               "Ó": o,
-               "ó": o,
-               "Õ": o,
-               "õ": o,
-               "Ô": o,
-               "ô": o,
-               "Ú": u,
-               "ú": u,
-               "Ü": u,
-               "ü": u,
-               "ç": c,
-               "Ç": c
-           };
-           for (var val in special_letters)
-               data = data.split(val).join(special_letters[val]).toLowerCase();
-           return data;
-       },
-       "portugues-asc": function(a, b) {
-           return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-       },
-       "portugues-desc": function(a, b) {
-           return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-       }
-   });
-   //"columnDefs": [{ type: 'portugues', targets: "_all" }],
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "portugues-pre": function(data) {
+                var specialLetters = {
+                    "Á": "a", "á": "a", "Ã": "a", "ã": "a", "À": "a", "à": "a",
+                    "É": "e", "é": "e", "Ê": "e", "ê": "e", "Í": "i", "í": "i",
+                    "Î": "i", "î": "i", "Ó": "o", "ó": "o", "Õ": "o", "õ": "o",
+                    "Ô": "o", "ô": "o", "Ú": "u", "ú": "u", "Ü": "u", "ü": "u",
+                    "Ç": "c", "ç": "c"
+                };
+                for (var val in specialLetters) {
+                    data = data.split(val).join(specialLetters[val]).toLowerCase();
+                }
+                return data;
+            },
+            "portugues-asc": function(a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+            "portugues-desc": function(a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        });
+    });
 </script>
+
 @endsection

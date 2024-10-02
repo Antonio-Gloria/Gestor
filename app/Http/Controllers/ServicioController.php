@@ -48,11 +48,13 @@ public function realizarServicio(Request $request)
     // Asignar el técnico al servicio
     $tecnico = Tecnico::find($request->tecnico_id);
     if ($tecnico) {
-        $servicio->tecnico_id = $tecnico->id;
-         // Guardar el ID del técnico
+        $servicio->tecnico_id = $tecnico->id; // Guardar el ID del técnico
     } else {
         return redirect()->route('servicios.index')->with('error', 'Técnico no encontrado.');
     }
+
+    // Guardar la descripción en la tabla servicios
+    $servicio->descripcion = $request->descripcion;
 
     // Guardar el servicio actualizado
     $servicio->save();
@@ -64,16 +66,13 @@ public function realizarServicio(Request $request)
         return redirect()->route('servicios.index')->with('error', 'Tipo de servicio no encontrado.');
     }
 
-    // Guardar la descripción en la sesión
-    $request->session()->put('descripcion', $request->descripcion);
-
     // Preparar los datos para enviar el correo
     $data = [
         'tipo_servicio' => $tipoServicioNombre,
         'nombre_solicitante' => $servicio->nombre_solicitante,
         'apellido_solicitante' => $servicio->apellido_solicitante,
         'fecha' => $servicio->fecha,
-        'descripcion' => $request->descripcion,
+        'descripcion' => $servicio->descripcion, // Descripción ahora guardada en la tabla
         'tecnico' => $tecnico->nombre, // Nombre del técnico elegido
     ];
 
@@ -83,8 +82,6 @@ public function realizarServicio(Request $request)
     // Redirigir con un mensaje de éxito
     return redirect()->route('servicios.index')->with('message', 'Servicio realizado y correo enviado.');
 }
-
-
 
 
 public function infoServicio($id, Request $request)

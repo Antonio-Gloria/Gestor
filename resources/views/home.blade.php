@@ -1,50 +1,45 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
+
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Solicitud de servicios') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            <!-- Card para la solicitud de servicios -->
+            <div class="card mb-4 shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>{{ __('Solicitud de Servicios') }}</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead">{{ __('Bienvenido al sistema de solicitud de servicios') }}</p>
 
-                    <h3>{{ __('Bienvenido al sistema de solicitud servicios') }}</h3>
-                   
-                    
-                    <!-- boton para solicitar servicio -->
-                    <a href="{{ route('servicios.create') }}" class="btn btn-primary btn-lg">
-                        {{ __('Solicitar un Servicio') }}
+                    <!-- Botón grande y llamativo para solicitar un servicio -->
+                    <a href="{{ route('servicios.create') }}" class="btn btn-success btn-lg mt-3">
+                        <i class="fas fa-plus-circle"></i> {{ __('Solicitar un Servicio') }}
                     </a>
-                  
-
-                   
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">{{ __('Gestor de servicios') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            <!-- Card para el gestor de servicios -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white text-center">
+                    <h4>{{ __('Gestor de Servicios') }}</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead">{{ __('Revisa el estado y la información de los servicios solicitados') }}</p>
 
-                    <h3>{{ __('Bienvenido al sistema gestor de servicios') }}</h3>
-                   
-                    <a href="{{ route('servicios.index') }}" class="btn btn-primary btn-lg">
-                        {{ __('Revisar servicios solicitados') }}
+                    <!-- Botón grande para revisar servicios solicitados -->
+                    <a href="{{ route('servicios.index') }}" class="btn btn-info btn-lg mt-3">
+                        <i class="fas fa-list"></i> {{ __('Revisar Servicios Solicitados') }}
                     </a>
-
-                   
                 </div>
             </div>
+
         </div>
     </div>
 </div>

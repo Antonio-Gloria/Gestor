@@ -334,7 +334,7 @@ return [
             'icon' => 'fas fa-fw fa-info',
         ],
         [
-            'text' => 'Tecnicos',
+            'text' => 'Técnicos',
             'url' => 'tecnicos',
             'icon' => 'fas fa-fw fa-info',
         ],

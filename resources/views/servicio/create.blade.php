@@ -1,36 +1,36 @@
-@extends('adminlte::page') 
-<!-- Extiende la plantilla de AdminLTE. Esto es una plantilla base para el panel de administración -->
+@extends('layouts.app')
+
+@section('css')
+    <link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
+@endsection
 
 @section('content') 
-<!-- Inicia la sección de contenido que se ubicará en la vista extendida -->
-<div class="row">
-    @if (session('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
-        </div>
-    @endif
-</div>
+<!-- Contenedor principal con márgenes adecuados -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <!-- Mensaje de éxito si hay uno en la sesión -->
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
 
+    <!-- Tarjeta centrada para el formulario -->
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Solicitar un Servicio</h2>
+            <hr>
 
-    <div class="container-sm">
-        <!-- Crea un contenedor pequeño para que el contenido esté centrado y con márgenes adecuados -->
-        <div class="container-fluid">
-            <div></div> <!-- Div vacío, tal vez reservado para algún futuro contenido o diseño -->
-            <h2>Solicitar un servicio</h2> <!-- Título principal de la página -->
-            <hr> <!-- Línea horizontal que separa el título del contenido -->
+            <!-- Formulario de solicitud de servicio -->
+            <form action="{{ route('servicios.store') }}" method="post" enctype="multipart/form-data" class="px-3">
+                @csrf
+                @method('POST')
 
-            <!-- Formulario para solicitar un nuevo servicio -->
-            <form action="{{ route('servicios.store') }}" method="post" enctype="multipart/form-data" class="col-lg-7">
-                @csrf 
-                <!-- Protege el formulario contra ataques CSRF (Cross-Site Request Forgery) -->
-                @method('POST') 
-                <!-- Define el método POST para enviar datos del formulario -->
-
-                <!-- Muestra errores si hay alguno en el formulario -->
+                <!-- Muestra errores en caso de existir -->
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
-                            <!-- Recorre los errores y los muestra en una lista -->
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -38,110 +38,102 @@
                     </div>
                 @endif
 
-                <!-- Campo para seleccionar el tipo de servicio -->
-                <div class="form-group">
-                    <label for="tipo_servicio_id">Tipo de servicio</label>
+                <!-- Tipo de servicio -->
+                <div class="form-group mb-3">
+                    <label for="tipo_servicio_id" class="form-label">Tipo de servicio</label>
                     <select class="form-control" id="tipo_servicio_id" name="tipo_servicio_id" required>
-                        <option value="" disabled selected>Selecciona el tipo de servicio que necesitas</option>
+                        <option value="" disabled selected>Selecciona el tipo de servicio</option>
                         @foreach($tipoServicios as $tipoServicio)
-                            <!-- Recorre los tipos de servicios disponibles y crea una opción para cada uno -->
                             <option value="{{ $tipoServicio->id }}">{{ $tipoServicio->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="estado">Estado del servicio solicitado</label>
-                    <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}" />
+
+                <!-- Estado del servicio -->
+                <div class="form-group mb-3">
+                    <label for="estado" class="form-label">Estado del servicio solicitado</label>
+                    <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}">
                 </div>
-                <!-- Campos para ingresar fecha y hora -->
-                <div class="container px-4 text-center">
-                    <div class="row gx-5">
-                      <div class="col">
-                        <!-- Campo para la fecha del servicio -->
-                        <div class="p-1 border bg-dark">Fecha</div>
-                        <input type="date" class="form-control" id="fecha" name="fecha" value="{{ old('fecha') }}" />
-                      </div>
-                      <div class="col">
-                        <!-- Campo para la hora del servicio -->
-                        <div class="p-1 border bg-dark">Hora</div>
-                        <input type="time" class="form-control" id="hora" name="hora" value="{{ old('hora') }}" />
-                      </div>
+
+                <!-- Fecha y hora -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" name="fecha" value="{{ old('fecha') }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="hora" class="form-label">Hora</label>
+                        <input type="time" class="form-control" id="hora" name="hora" value="{{ old('hora') }}">
                     </div>
                 </div>
-                <div class="container px-4 text-center">
-                    <div class="row gx-5">
-                      <div class="col">
-                        <!-- Campo para el nombre del solicitante -->
-                        <div class="p-1 border bg-dark">Nombre del solicitante</div>
-                        <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" value="{{ old('nombre_solicitante') }}" />
-                      </div>
-                      <div class="col">
-                        <!-- Campo para el apellido del solicitante -->
-                        <div class="p-1 border bg-dark">Apellido del solicitante</div>
-                        <input type="text" class="form-control" id="apellido_solicitante" name="apellido_solicitante" value="{{ old('apellido_solicitante') }}" />
-                      </div>
+
+                <!-- Nombre y apellido del solicitante -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre_solicitante" class="form-label">Nombre del solicitante</label>
+                        <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" value="{{ old('nombre_solicitante') }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellido_solicitante" class="form-label">Apellido del solicitante</label>
+                        <input type="text" class="form-control" id="apellido_solicitante" name="apellido_solicitante" value="{{ old('apellido_solicitante') }}">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="tipo">Tipo</label>
+
+                <!-- Tipo: Profesor o Alumno -->
+                <div class="form-group mb-3">
+                    <label class="form-label">Tipo</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="tipo" id="profesor" value="Profesor" required>
-                        <label class="form-check-label" for="profesor">
-                            Profesor
-                        </label>
+                        <label class="form-check-label" for="profesor">Profesor</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="tipo" id="alumno" value="Alumno" required>
-                        <label class="form-check-label" for="alumno">
-                            Alumno
-                        </label>
+                        <label class="form-check-label" for="alumno">Alumno</label>
                     </div>
-                </div> 
-                <div class="form-group">
-                    <label for="departamento">Departamento (Carrera)</label>
-                    <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}" />
                 </div>
-                <div class="form-group">
-                    <label for="codigo">Código</label>
-                    <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}" />
-                </div>
-                <div class="form-group">
-                    <label for="contacto">Contacto</label>
-                    <input type="text" class="form-control" id="contacto" name="contacto" value="{{ old('contacto') }}" />
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required />
-                </div>
-                
-                <!-- Botones de acción: cancelar y agregar nuevo servicio -->
-                <a href="{{ route('home') }}" type="submit" class="btn btn-danger">Cancelar</a>
-                <button type="submit" class="btn btn-success">Solicitar servicio</button>
-               
-                
-            </form> <!-- Cierre del formulario -->
 
+                <!-- Departamento y código -->
+                <div class="form-group mb-3">
+                    <label for="departamento" class="form-label">Departamento (Carrera)</label>
+                    <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="codigo" class="form-label">Código</label>
+                    <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}">
+                </div>
+
+                <!-- Contacto y Email -->
+                <div class="form-group mb-3">
+                    <label for="contacto" class="form-label">Contacto</label>
+                    <input type="text" class="form-control" id="contacto" name="contacto" value="{{ old('contacto') }}">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{{ route('home') }}" class="btn btn-outline-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Solicitar servicio</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <!-- Script para establecer automáticamente la hora actual en el campo 'hora' -->
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            // Obtener el campo de entrada de hora
-            var horaInput = document.getElementById('hora');
-            
-            // Crear un objeto Date para obtener la hora actual
-            var now = new Date();
-            
-            // Formatear la hora en el formato 'HH:MM'
-            var hours = now.getHours().toString().padStart(2, '0');
-            var minutes = now.getMinutes().toString().padStart(2, '0');
-            var currentTime = hours + ':' + minutes;
-            
-            // Establecer el valor del campo de entrada de la hora con la hora actual
-            horaInput.value = currentTime;
-            
-        });
-    </script>
+<!-- Script para establecer la hora actual -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        var horaInput = document.getElementById('hora');
+        var now = new Date();
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var currentTime = hours + ':' + minutes;
+        horaInput.value = currentTime;
+    });
+</script>
 
 @endsection

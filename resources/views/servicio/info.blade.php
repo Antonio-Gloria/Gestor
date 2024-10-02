@@ -60,7 +60,7 @@
         
         <tr>
             <th>Descripción:</th>
-            <td>{{ $data['descripcion'] ?? 'No hay descripción disponible' }}</td>
+            <td>{{ $servicio->descripcion ?? 'No hay descripción disponible' }}</td>
         </tr>
         
         
