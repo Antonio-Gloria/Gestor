@@ -68,6 +68,9 @@
 
 @section('js')
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -83,7 +86,7 @@
         $('#nombre').html(parametro);
 
     
-        let url = "{{ route('realizado-servicio', ':id') }}";
+        let url = "{{ route('delete-tecnico', ':id') }}";
         url = url.replace(':id', parametro);
         document.getElementById('borrar').href = url;
     }

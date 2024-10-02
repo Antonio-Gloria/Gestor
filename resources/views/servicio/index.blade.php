@@ -73,6 +73,7 @@
            </table>
        </div>
    </div>
+
   
  <!-- Modal -->
  <div class="modal fade" id="modalRealizado" tabindex="-1" aria-labelledby="modalRealizadoLabel" aria-hidden="true">
@@ -108,7 +109,7 @@
                     </button>
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-paper-plane"></i> Enviar
-                    </button>
+                    </button>                    
                 </div>
             </form>
         </div>
@@ -119,6 +120,14 @@
 
 @section('js')
 
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -127,8 +136,14 @@
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
+<script>
+    $('#modalRealizado').on('hidden.bs.modal', function()
+{
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+})
+</script>
 <script type="text/javascript">
-   
     function modal(parametro) {
         console.log(parametro);
         $('#nombre').html(parametro);
@@ -141,7 +156,6 @@
     var data = @json($servicios);
 
     $(document).ready(function() {
-     
         $('#example').DataTable({
             data: data, 
             pageLength: 100, 

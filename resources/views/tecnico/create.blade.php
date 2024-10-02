@@ -12,7 +12,7 @@
 
     <div class="container">
         <div class="row">
-            <h2>Agregar un nuevo tecnico</h2>
+            <h2>Agregar un nuevo técnico</h2>
             <hr>
             <form action="{{ route('tecnicos.store') }}" method="post" enctype="multipart/form-data" class="col-lg-7">
                 @csrf

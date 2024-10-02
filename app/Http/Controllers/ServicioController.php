@@ -104,26 +104,23 @@ public function cargarDT($consulta) //index
 {
     $servicios = [];
     foreach ($consulta as $key => $value) {
-        $ruta = "eliminar" . $value['id'];
         $eliminar = route('delete-servicio', $value['id']);
-        $realizado = 'javascript:void(0);" onclick="openRealizadoModal(' . $value['id'] . ')"';
         $info = route('info-servicio', $value['id']);
         $acciones = '
         <div class="btn-acciones">
             <div class="btn-circle">
-                <a href="' . $realizado . '" role="button" class="btn btn-success" title="Servicio realizado">
+                <a href="javascript:void(0);" role="button" class="btn btn-success" title="Servicio realizado" data-bs-toggle="modal" data-bs-target="#modalRealizado" onclick="openRealizadoModal(' . $value['id'] . ')">
                     <i class="fas fa-fw fa-check"></i>
                 </a>
-                <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <a href="' . $eliminar . '" role="button" class="btn btn-danger" title="Eliminar" >
                     <i class="far fa-trash-alt"></i>
                 </a>
-                <a href="' . $info . '" role="button" class="btn btn-info" title="Más información" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <a href="' . $info . '" role="button" class="btn btn-info" title="Más información">
                     <i class="fas fa-fw fa-info"></i>
                 </a>
             </div>
         </div>
-    ';
-    
+        ';
 
         $servicios[$key] = array(
             $acciones,
@@ -139,6 +136,7 @@ public function cargarDT($consulta) //index
 
     return $servicios;
 }
+
 
 public function cargarDT1($consulta)   //realizado
 {
