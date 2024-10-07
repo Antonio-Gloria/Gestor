@@ -190,10 +190,15 @@ public function cargarDT1($consulta)   //realizado
             'nombre_solicitante' => 'required',
             'apellido_solicitante' => 'required',
             'departamento' => 'required',
-            'codigo' => 'required',
-            'contacto' => 'required',
+            'codigo' => 'required|min:7|max:9',
+            'contacto' => 'required|digits:10',
             'tipo' => 'required|in:Profesor,Alumno',
-            'email' => 'required|email', 
+            'email' => [
+                        'required',
+                        'email',
+                        'regex:/^[a-zA-Z0-9._%+-]+@(academicos|alumnos)\.udg\.mx$/'
+                        ],
+ 
         ]);
     
         $servicio = new Servicio();

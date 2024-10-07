@@ -1,46 +1,82 @@
-@extends('layouts.app')
+@extends('layouts.app1')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('build/assets/app.css')}}">
-
+<link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="content me-0">
+    <style >
+        body {
+            background: url("https://tse4.mm.bing.net/th?id=OIP.AmjCR1h1J_u7lBClC2J0HwAAAA&pid=Api&P=0&h=180") no-repeat center center fixed;
+            background-size: contain;
+            margin: 0;
+            padding: 0;
+            
+        }
 
-            <!-- Card para la solicitud de servicios -->
-            <div class="card mb-4 shadow-sm border-0">
-                <div class="card-header bg-primary text-white text-center">
-                    <h4>{{ __('Solicitud de Servicios') }}</h4>
-                </div>
-                <div class="card-body text-center">
-                    <p class="lead">{{ __('Bienvenido al sistema de solicitud de servicios') }}</p>
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.7); /* Filtro negro semitransparente */
+            height: 100vh; /* Cubrir la pantalla completa */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
 
-                    <!-- Botón grande y llamativo para solicitar un servicio -->
-                    <a href="{{ route('servicios.create') }}" class="btn btn-success btn-lg mt-3">
-                        <i class="fas fa-plus-circle"></i> {{ __('Solicitar un Servicio') }}
-                    </a>
-                </div>
-            </div>
+        .overlay h1 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
 
-            <!-- Card para el gestor de servicios -->
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-dark text-white text-center">
-                    <h4>{{ __('Gestor de Servicios') }}</h4>
-                </div>
-                <div class="card-body text-center">
-                    <p class="lead">{{ __('Revisa el estado y la información de los servicios solicitados') }}</p>
+        .overlay p {
+            font-size: 1.2rem;
+            color: #dcdcdc;
+            margin-bottom: 2rem;
+        }
 
-                    <!-- Botón grande para revisar servicios solicitados -->
-                    <a href="{{ route('servicios.index') }}" class="btn btn-info btn-lg mt-3">
-                        <i class="fas fa-list"></i> {{ __('Revisar Servicios Solicitados') }}
-                    </a>
-                </div>
-            </div>
+        .overlay .btn {
+            padding: 10px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+        }
 
+        .btn-light {
+            background-color: #fff;
+            color: #333;
+            border: none;
+        }
+
+        .btn-light:hover {
+            background-color: #f8f9fa;
+            color: #007bff;
+        }
+
+        .back-link {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .back-link a {
+            font-size: 1rem;
+            color: #fff;
+        }
+    </style>
+
+    <div class="overlay">
+        <div class="content me-2">
+            <h1>Bienvenido a Servicios CUCSH</h1>
+            <p >Aquí puedes realizar una solicitud de servicio de manera rápida y sencilla</p>
+            
+            <a href="{{ route('servicios.create') }}" class="btn btn-light me-2">Solicitar un servicio</a>
+            <a href="http://www.cucsh.udg.mx/" class="btn btn-outline-light me-2">Ir a CUCSH</a>
         </div>
     </div>
+
+   
 </div>
 @endsection

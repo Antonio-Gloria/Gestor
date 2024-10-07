@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app1')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
@@ -51,8 +51,8 @@
 
                 <!-- Estado del servicio -->
                 <div class="form-group mb-3">
-                    <label for="estado" class="form-label">Estado del servicio solicitado</label>
-                    <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}">
+                    <label for="estado" class="form-label">Descripción de lo que necesitas</label>
+                    <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado') }}" required>
                 </div>
 
                 <!-- Fecha y hora -->
@@ -71,11 +71,11 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="nombre_solicitante" class="form-label">Nombre del solicitante</label>
-                        <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" value="{{ old('nombre_solicitante') }}">
+                        <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" value="{{ old('nombre_solicitante') }}" required>
                     </div>
                     <div class="col-md-6">
                         <label for="apellido_solicitante" class="form-label">Apellido del solicitante</label>
-                        <input type="text" class="form-control" id="apellido_solicitante" name="apellido_solicitante" value="{{ old('apellido_solicitante') }}">
+                        <input type="text" class="form-control" id="apellido_solicitante" name="apellido_solicitante" value="{{ old('apellido_solicitante') }}" required>
                     </div>
                 </div>
 
@@ -95,29 +95,32 @@
                 <!-- Departamento y código -->
                 <div class="form-group mb-3">
                     <label for="departamento" class="form-label">Departamento (Carrera)</label>
-                    <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}">
+                    <input type="text" class="form-control" id="departamento" name="departamento" value="{{ old('departamento') }}" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="codigo" class="form-label">Código</label>
-                    <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}">
+                    <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}" required>
                 </div>
 
                 <!-- Contacto y Email -->
                 <div class="form-group mb-3">
-                    <label for="contacto" class="form-label">Contacto</label>
-                    <input type="text" class="form-control" id="contacto" name="contacto" value="{{ old('contacto') }}">
+                    <label for="contacto" class="form-label">Número de contacto</label>
+                    <input type="text" class="form-control" id="contacto" name="contacto" value="{{ old('contacto') }}" required>
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label">Correo institucional</label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
                 </div>
 
                 <!-- Botones de acción -->
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('home') }}" class="btn btn-outline-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-outline-success">Solicitar servicio</button>
+                    <a href="{{ route('home') }}" class="btn btn-outline-danger me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-outline-success me-2">Solicitar servicio</button>
+                    <div class="back-link">
+                        <a href="http://www.cucsh.udg.mx/" class="btn btn-outline-dark me-2">Ir a CUCSH</a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -132,6 +135,15 @@
         var hours = now.getHours().toString().padStart(2, '0');
         var minutes = now.getMinutes().toString().padStart(2, '0');
         horaInput.value = `${hours}:${minutes}`;
+        horaInput.readOnly=true;
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var fechaInput = document.getElementById('fecha');
+        var today = new Date().toISOString().split('T')[0];
+        fechaInput.value = today;
+        fechaInput.readOnly = true;
     });
 </script>
 @endsection

@@ -315,36 +315,35 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
+        ['header' => 'CUCSH'],
         [
             'text' => 'Servicios',
-            'url' => 'servicios/create',
-            'icon' => 'fas fa-fw fa-info',
+            'url' => 'servicios',
+            'icon' => 'fas fa-fw fa-list',
         ],
         [
             'text' => 'Tipo de servicios',
             'url' => 'tiposervicios',
-            'icon' => 'fas fa-fw fa-info',
+            'icon' => 'fas fa-fw fa-list',
         ],
         [
             'text' => 'Técnicos',
             'url' => 'tecnicos',
-            'icon' => 'fas fa-fw fa-info',
+            'icon' => 'fas fa-fw fa-list',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Usuarios',
+            'url' => 'users',
+            'icon' => 'fas fa-fw fa-users'
         ],
+        [
+            'text' => 'Administrador',
+            'url' => 'admin',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+       
         
-        [
+        /*[
             'text' => 'multilevel',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
@@ -381,8 +380,8 @@ return [
                     'url' => '#',
                 ],
             ],
-        ],
-        ['header' => 'labels'],
+        ],*/
+         /* ['header' => 'labels'],
         [
             'text' => 'important',
             'icon_color' => 'red',
@@ -397,8 +396,8 @@ return [
             'text' => 'information',
             'icon_color' => 'cyan',
             'url' => '#',
-        ],
-    ],
+        ], */
+    ], 
 
     /*
     |--------------------------------------------------------------------------

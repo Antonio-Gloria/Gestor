@@ -23,20 +23,17 @@
                 <td>{{ $servicio->tipoServicio->nombre }}</td>
             </tr>
             <tr>
-                <th>Fecha:</th>
-                <td>{{ $servicio->fecha }}</td>
+                <th>Fecha y hora:</th>
+                <td>{{ $servicio->fecha}}, {{ $servicio->hora}}</td>
+            </tr>
+           
+            <tr>
+                <th>Nombre y apellido del solicitante:</th>
+                <td>{{ $servicio->nombre_solicitante }} {{ $servicio->apellido_solicitante}} </td>
             </tr>
             <tr>
-                <th>Hora:</th>
-                <td>{{ $servicio->hora }}</td>
-            </tr>
-            <tr>
-                <th>Nombre del Solicitante:</th>
-                <td>{{ $servicio->nombre_solicitante }}</td>
-            </tr>
-            <tr>
-                <th>Apellido del Solicitante:</th>
-                <td>{{ $servicio->apellido_solicitante }}</td>
+                <th>Código del solicitante:</th>
+                <td> {{ $servicio->codigo}} </td>
             </tr>
             <tr>
                 <th>Contacto:</th>
@@ -53,7 +50,7 @@
             <tr>
                 <th>Técnico:</th>
                 <td>
-                    {{ $servicio->tecnico ? $servicio->tecnico->nombre : 'No asignado' }}
+                    {{ $servicio->tecnico ? $servicio->tecnico->nombre : 'No asignado' }} {{ $servicio->tecnico ? $servicio->tecnico->apellido : ''}}
                 </td>
             </tr>
             <tr>
