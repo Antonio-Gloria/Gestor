@@ -48,6 +48,8 @@
         <p><strong>Descripción:</strong> {{ $data['descripcion'] }}</p>
         <p><strong>Técnico:</strong> {{ $data['tecnico'] }}</p>
     </div>
+
+    <p>Gracias por solicitar nuestros servicios.</p>
     <div class="footer">
         &copy; 2024 CUCSH
     </div>

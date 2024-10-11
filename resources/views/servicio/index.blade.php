@@ -17,7 +17,8 @@
             <h2 class="text">Lista de Servicios por Realizar</h2>
             <hr>
             <br>
-            <div class="d-flex justify-content-center">
+            <!-- <div class="d-flex justify-content-center"> -->
+            <div class="d-flex justify-content-end mb-3">
                 <a href="{{ route('servicios.create') }}" class="btn btn-outline-success me-2">Solicitar Servicio</a>
                 <a href="{{ route('servicios.realizado') }}" class="btn btn-outline-info me-2">Ir a Servicios Realizados</a>
                 <a href="{{ route('home') }}" class="btn btn-outline-primary">Regresar</a>

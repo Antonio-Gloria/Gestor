@@ -100,18 +100,18 @@
 
                 <div class="form-group mb-3">
                     <label for="codigo" class="form-label">Código</label>
-                    <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}" required>
+                    <input type="text" class="form-control" id="codigo" name="codigo" placeholder="7 a 9 digitos" value="{{ old('codigo') }}" required>
                 </div>
 
                 <!-- Contacto y Email -->
                 <div class="form-group mb-3">
                     <label for="contacto" class="form-label">Número de contacto</label>
-                    <input type="text" class="form-control" id="contacto" name="contacto" value="{{ old('contacto') }}" required>
+                    <input type="text" class="form-control" id="contacto" name="contacto" placeholder="Ingresa los 10 digitos" value="{{ old('contacto') }}" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="email" class="form-label">Correo institucional</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ej: luis@academicos.udg.mx" value="{{ old('email') }}" required>
                 </div>
 
                 <!-- Botones de acción -->

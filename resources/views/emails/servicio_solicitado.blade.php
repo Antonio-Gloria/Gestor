@@ -67,7 +67,7 @@
         <p>Gracias por solicitar nuestros servicios.</p>
     </div>
     <div class="footer">
-        &copy; 2024 Su Empresa
+        &copy; 2024 CUCSH
     </div>
 </body>
 </html>

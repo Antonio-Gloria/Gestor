@@ -196,7 +196,7 @@ public function cargarDT1($consulta)   //realizado
             'email' => [
                         'required',
                         'email',
-                        'regex:/^[a-zA-Z0-9._%+-]+@(academicos|alumnos)\.udg\.mx$/'
+                        //'regex:/^[a-zA-Z0-9._%+-]+@(academicos|alumnos)\.udg\.mx$/'
                         ],
  
         ]);
