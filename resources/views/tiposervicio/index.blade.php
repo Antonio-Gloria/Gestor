@@ -1,9 +1,5 @@
 @extends('adminlte::page')
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
-@endsection
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -41,7 +37,6 @@
                 </div>
             </div>
 
-
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -65,21 +60,9 @@
 @endsection
 
 @section('js')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
-
     <script type="text/javascript">
         function modal(parametro) {
             $('#nombre').html(parametro);
-
             let url = "{{ route('delete-tiposervicio', ':id') }}";
             url = url.replace(':id', parametro);
             document.getElementById('borrar').href = url;
@@ -91,19 +74,14 @@
             $('#example').DataTable({
                 data: data,
                 pageLength: 100,
-                order: [
-                    [0, "desc"]
-                ],
+                order: [[0, "desc"]],
                 responsive: true,
                 dom: '<"row mb-3"<"col-lg-3"l><"col-lg-5"B><"col-lg-4"f>>rtip',
-                buttons: [
-                    'copy', 'excel',
-                    {
-                        extend: 'pdfHtml5',
-                        orientation: 'landscape',
-                        pageSize: 'LETTER'
-                    }
-                ],
+                buttons: ['copy', 'excel', {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LETTER'
+                }],
                 language: {
                     sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",
@@ -123,50 +101,6 @@
                         sSortAscending: ": Activar para ordenar la columna de manera ascendente",
                         sSortDescending: ": Activar para ordenar la columna de manera descendente"
                     }
-                }
-            });
-
-            // Añadir ordenación personalizada para caracteres especiales (portugués, español)
-            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-                "portugues-pre": function(data) {
-                    var specialLetters = {
-                        "Á": "a",
-                        "á": "a",
-                        "Ã": "a",
-                        "ã": "a",
-                        "À": "a",
-                        "à": "a",
-                        "É": "e",
-                        "é": "e",
-                        "Ê": "e",
-                        "ê": "e",
-                        "Í": "i",
-                        "í": "i",
-                        "Î": "i",
-                        "î": "i",
-                        "Ó": "o",
-                        "ó": "o",
-                        "Õ": "o",
-                        "õ": "o",
-                        "Ô": "o",
-                        "ô": "o",
-                        "Ú": "u",
-                        "ú": "u",
-                        "Ü": "u",
-                        "ü": "u",
-                        "Ç": "c",
-                        "ç": "c"
-                    };
-                    for (var val in specialLetters) {
-                        data = data.split(val).join(specialLetters[val]).toLowerCase();
-                    }
-                    return data;
-                },
-                "portugues-asc": function(a, b) {
-                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-                },
-                "portugues-desc": function(a, b) {
-                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
                 }
             });
         });

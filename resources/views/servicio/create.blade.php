@@ -1,9 +1,5 @@
 @extends('layouts.app1')
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
-@endsection
-
 @section('content') 
 <!-- Contenedor principal con márgenes adecuados -->
 <div class="container my-5">

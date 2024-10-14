@@ -19,8 +19,8 @@ class ServicioController extends Controller
     public function index()
     {
 //Muestra los registros de la tabla
-       $vs_servicios = Servicio::with( 'tipoServicio')->where('status', '=', 1)->get();
-       $servicios = $this->cargarDT($vs_servicios);
+       $consulta = Servicio::with( 'tipoServicio')->where('status', '=', 1)->get();
+       $servicios = $this->cargarDT($consulta, 'index');
        $tecnicos = Tecnico::all();
        return view('servicio.index', compact('servicios', 'tecnicos')); 
 
@@ -29,8 +29,8 @@ class ServicioController extends Controller
     public function realizado()
 {
     
-    $vs_servicios = Servicio::with('tipoServicio')->where('status', '=', 2)->get();
-    $servicios = $this->cargarDT1($vs_servicios);
+    $consulta = Servicio::with('tipoServicio')->where('status', '=', 2)->get();
+    $servicios = $this->cargarDT($consulta, 'realizado');
     return view('servicio.realizado', compact('servicios'));
 }
 
@@ -41,11 +41,8 @@ public function realizarServicio(Request $request)
     if (!$servicio) {
         return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
     }
-
-    // Cambiar el estado del servicio
     $servicio->status = 2;
 
-    // Asignar el técnico al servicio
     $tecnico = Tecnico::find($request->tecnico_id);
     if ($tecnico) {
         $servicio->tecnico_id = $tecnico->id; // Guardar el ID del técnico
@@ -53,27 +50,23 @@ public function realizarServicio(Request $request)
         return redirect()->route('servicios.index')->with('error', 'Técnico no encontrado.');
     }
 
-    // Guardar la descripción en la tabla servicios
     $servicio->descripcion = $request->descripcion;
 
-    // Guardar el servicio actualizado
     $servicio->save();
 
-    // Verificar si el servicio tiene tipo de servicio asignado
     if ($servicio->tiposervicio) {
         $tipoServicioNombre = $servicio->tiposervicio->nombre;
     } else {
         return redirect()->route('servicios.index')->with('error', 'Tipo de servicio no encontrado.');
     }
 
-    // Preparar los datos para enviar el correo
     $data = [
         'tipo_servicio' => $tipoServicioNombre,
         'nombre_solicitante' => $servicio->nombre_solicitante,
         'apellido_solicitante' => $servicio->apellido_solicitante,
         'fecha' => $servicio->fecha,
-        'descripcion' => $servicio->descripcion, // Descripción ahora guardada en la tabla
-        'tecnico' => $tecnico->nombre, // Nombre del técnico elegido
+        'descripcion' => $servicio->descripcion, 
+        'tecnico' => $tecnico->nombre, 
     ];
 
     // Enviar correo con los detalles del servicio realizado
@@ -99,65 +92,49 @@ public function infoServicio($id, Request $request)
     return view('servicio.info', compact('servicio', 'data'));
 }
 
-
-public function cargarDT($consulta) //index
+public function cargarDT($consulta, $modo)
 {
     $servicios = [];
     foreach ($consulta as $key => $value) {
+        // Generar las rutas
         $eliminar = route('delete-servicio', $value['id']);
         $info = route('info-servicio', $value['id']);
-        $acciones = '
-        <div class="btn-acciones">
-            <div class="btn-circle">
-                <a href="javascript:void(0);" role="button" class="btn btn-outline-success" title="Servicio realizado" data-bs-toggle="modal" data-bs-target="#modalRealizado" onclick="openRealizadoModal(' . $value['id'] . ')">
-                    <i class="fas fa-fw fa-check"></i>
-                </a>
-                <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
-                    <i class="far fa-trash-alt"></i>
-                </a>
-                <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">
-                    <i class="fas fa-fw fa-info"></i>
-                </a>
-            </div>
-        </div>
-        ';
 
-        $servicios[$key] = array(
-            $acciones,
-            $value['id'],
-            $value->tipoServicio->nombre,
-            $value['fecha'],
-            $value['hora'],
-            $value['nombre_solicitante'],
-            $value['apellido_solicitante'],
-            $value['tipo'],
-        );
-    }
-
-    return $servicios;
-}
-
-
-public function cargarDT1($consulta)   //realizado
-{
-    $servicios = [];
-    foreach ($consulta as $key => $value) {
-        $ruta = "eliminar" . $value['id'];
-        $eliminar = route('delete-servicio', $value['id']);
-        $info = route('info-servicio', $value['id']);
-        $acciones = '
+        // Determinar las acciones según el modo
+        if ($modo === 'index') {
+            // Acciones para el modo "index"
+            $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
-                   <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
-                    <i class="far fa-trash-alt"></i>
-                </a>
-                     <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">
-                    <i class="fas fa-info"></i>
-                </a>
+                    <a href="javascript:void(0);" role="button" class="btn btn-outline-success" title="Servicio realizado" data-bs-toggle="modal" data-bs-target="#modalRealizado" onclick="openRealizadoModal(' . $value['id'] . ')">
+                        <i class="fas fa-fw fa-check"></i>
+                    </a>
+                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                    <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">
+                        <i class="fas fa-fw fa-info"></i>
+                    </a>
                 </div>
             </div>
-        ';
+            ';
+        } elseif ($modo === 'realizado') {
+            // Acciones para el modo "realizado"
+            $acciones = '
+            <div class="btn-acciones">
+                <div class="btn-circle">
+                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                    <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">
+                        <i class="fas fa-info"></i>
+                    </a>
+                </div>
+            </div>
+            ';
+        }
 
+        // Formar el array de servicios
         $servicios[$key] = array(
             $acciones,
             $value['id'],
@@ -167,10 +144,16 @@ public function cargarDT1($consulta)   //realizado
             $value['nombre_solicitante'],
             $value['apellido_solicitante'],
         );
+
+        // Si es modo index, agregar el campo 'tipo'
+        if ($modo === 'index') {
+            $servicios[$key][] = $value['tipo'];
+        }
     }
 
     return $servicios;
 }
+
 
     public function create()
     {
@@ -222,40 +205,7 @@ public function cargarDT1($consulta)   //realizado
              return redirect()->route('servicios.create')->with(array(
                 "message" => "Servicio solicitado exitosamente, se te ha enviado un correo con los datos del servicio que solicitaste"
         ));
-    }
-    
-    
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    } 
 
     public function delete_servicio($servicio_id)
     {
