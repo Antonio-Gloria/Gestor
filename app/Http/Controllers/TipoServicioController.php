@@ -7,31 +7,29 @@ use Illuminate\Http\Request;
 
 class TipoServicioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-       $vs_tiposervicios = TipoServicio::where('status', '=', 1)->get();
-       $tiposervicios = $this->cargarDT($vs_tiposervicios);
-       return view('tiposervicio.index', compact('tiposervicios')); 
+        $vs_tiposervicios = TipoServicio::where('status', '=', 1)->get();
+        $tiposervicios = $this->cargarDT($vs_tiposervicios);
+        return view('tiposervicio.index', compact('tiposervicios'));
     }
 
     public function cargarDT($consulta)
-   {
-       $tiposervicios = [];
-       foreach ($consulta as $key => $value) {
-           $ruta = "eliminar" . $value['id'];
-           $eliminar = route('delete-tiposervicio', $value['id']);
-           $actualizar = route('tiposervicios.edit', $value['id']);
-           $acciones = '
+    {
+        $tiposervicios = [];
+        foreach ($consulta as $key => $value) {
+            $ruta = "eliminar" . $value['id'];
+            $eliminar = route('delete-tiposervicio', $value['id']);
+            $actualizar = route('tiposervicios.edit', $value['id']);
+            $acciones = '
           <div class="btn-acciones">
               <div class="btn-circle">
                   <a href="' . $actualizar . '" role="button" class="btn btn-outline-success" title="Actualizar">
                       <i class="far fa-edit"></i>
                   </a>
                   
-                   <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger"title="Eliminar" onclick="modal('.$value['id'].')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
+                   <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger"title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
                       <i class="far fa-trash-alt"></i>
                   </a>
               </div>
@@ -39,38 +37,30 @@ class TipoServicioController extends Controller
 ';
 
 
-           $tiposervicios[$key] = array(
-               $acciones,
-               $value['id'],
-               $value['nombre'],
-               $value['descripcion'],
-              
-           );
-       }
+            $tiposervicios[$key] = array(
+                $acciones,
+                $value['id'],
+                $value['nombre'],
+                $value['descripcion'],
 
-       return $tiposervicios;
-   }
+            );
+        }
 
+        return $tiposervicios;
+    }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('tiposervicio.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-Public function store(Request $request)
-{
-//validación de campos requeridos
-$this->validate($request, [
+    public function store(Request $request)
+    {
+
+        $this->validate($request, [
             'nombre' => 'required',
             'descripcion' => 'required',
-           
+
         ]);
 
 
@@ -83,7 +73,7 @@ $this->validate($request, [
         return redirect()->route('tiposervicios.index')->with(array(
             'message' => 'El tipo de servicio se ha subido correctamente'
         ));
-}
+    }
 
     public function edit(string $id)
     {
@@ -93,10 +83,6 @@ $this->validate($request, [
         ));
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $this->validate($request, [
@@ -128,5 +114,4 @@ $this->validate($request, [
             ));
         }
     }
-
 }

@@ -12,10 +12,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/servicios/create', [ServicioController::class, 'create'])->name('servicios.create');
-Route::resource('/servicios', App\Http\Controllers\ServicioController::class)
-    ->except(['create'])  // Excluir create del middleware
-    ->middleware('auth');
-
+Route::resource('/servicios', App\Http\Controllers\ServicioController::class)->except(['create'])->middleware('auth');
 Route::resource('/tiposervicios', App\Http\Controllers\TipoServicioController::class)->middleware('auth');
 Route::resource('/tecnicos', App\Http\Controllers\TecnicoController::class)->middleware('auth');
 Route::get('delete-tiposervicio/{tiposervicio_id}', [App\Http\Controllers\TipoServicioController::class, 'delete_tiposervicio'])->name('delete-tiposervicio')->middleware('auth');

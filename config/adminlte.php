@@ -310,11 +310,6 @@ return [
             'route' => 'home',
             'icon' => 'fas fa-tachometer-alt fa-fw',
         ],
-        //<!-- [
-        //     'text' => 'Colaboradores',
-          //  'route' => 'users',
-            //'icon' => 'fas fa-users fa-fw',
-        //] -->,
         ['header' => 'ADMINISTRADOR'],
         [
             'text' => 'Servicios',
@@ -330,8 +325,8 @@ return [
             'text' => 'Técnicos',
             'url' => 'tecnicos',
             'icon' => 'fab fa-fw fa-buffer',
-        ],      
-    ], 
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------

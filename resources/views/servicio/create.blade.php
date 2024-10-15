@@ -123,7 +123,6 @@
     </div>
 </div>
 
-<!-- Script para establecer la hora actual -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         var horaInput = document.getElementById('hora');

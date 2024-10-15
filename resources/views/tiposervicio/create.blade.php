@@ -12,7 +12,7 @@
                         <form action="{{ route('tiposervicios.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
-                            
+
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -25,16 +25,19 @@
 
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
+                                <input type="text" class="form-control" id="nombre" name="nombre"
+                                    value="{{ old('nombre') }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripción</label>
-                                <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ old('descripcion') }}" required>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion"
+                                    value="{{ old('descripcion') }}" required>
                             </div>
 
                             <div class="d-flex justify-content-between">
                                 <a href="{{ route('tiposervicios.index') }}" class="btn btn-outline-danger">Cancelar</a>
-                                <button type="submit" class="btn btn-outline-success">Agregar Nuevo Tipo de Servicio</button>
+                                <button type="submit" class="btn btn-outline-success">Agregar Nuevo Tipo de
+                                    Servicio</button>
                             </div>
                         </form>
                     </div>

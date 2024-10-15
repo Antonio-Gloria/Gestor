@@ -11,7 +11,8 @@
 
         <div class="card shadow">
             <div class="card-body">
-                <form action="{{ route('tecnicos.update', $tecnico->id) }}" method="POST" enctype="multipart/form-data" class="col-lg-7">
+                <form action="{{ route('tecnicos.update', $tecnico->id) }}" method="POST" enctype="multipart/form-data"
+                    class="col-lg-7">
                     @csrf
                     @method('PUT')
 
@@ -27,22 +28,26 @@
 
                     <div class="form-group mb-3">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $tecnico->nombre }}" required>
+                        <input type="text" class="form-control" id="nombre" name="nombre"
+                            value="{{ $tecnico->nombre }}" required>
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label for="apellido">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" name="apellido" value="{{ $tecnico->apellido }}" required>
+                        <input type="text" class="form-control" id="apellido" name="apellido"
+                            value="{{ $tecnico->apellido }}" required>
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ $tecnico->email }}" required>
+                        <input type="email" class="form-control" id="email" name="email"
+                            value="{{ $tecnico->email }}" required>
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label for="telefono">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" name="telefono" value="{{ $tecnico->telefono }}" required>
+                        <input type="text" class="form-control" id="telefono" name="telefono"
+                            value="{{ $tecnico->telefono }}" required>
                     </div>
 
                     <div class="d-flex justify-content-between">

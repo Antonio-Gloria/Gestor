@@ -22,7 +22,7 @@ class Servicio extends Model
         'contacto',
         'tipo',
         'email',
-        
+
     ];
 
     public function tiposervicio() //Esto lo agregué para ver si puedo obtener el nombre el tipo de servicio seleccionado
@@ -32,8 +32,6 @@ class Servicio extends Model
 
     public function tecnico()
     {
-        return $this->belongsTo( Tecnico::class, 'tecnico_id');
+        return $this->belongsTo(Tecnico::class, 'tecnico_id');
     }
-   
-    
 }

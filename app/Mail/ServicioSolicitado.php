@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Servicio;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -15,12 +14,8 @@ class ServicioSolicitado extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
+    public $servicio;
 
-     public $servicio;
-     
     public function __construct(Servicio $servicio)
     {
         $this->servicio = $servicio;
@@ -29,15 +24,12 @@ class ServicioSolicitado extends Mailable
     public function build()
     {
         return $this->view('emails.servicio_solicitado')
-                    ->subject('Nuevo Servicio Solicitado')
-                    ->with([
-                        'servicio' => $this->servicio,
-                    ]);
+            ->subject('Nuevo Servicio Solicitado')
+            ->with([
+                'servicio' => $this->servicio,
+            ]);
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -45,13 +37,8 @@ class ServicioSolicitado extends Mailable
             subject: 'Servicio Solicitado',
 
         );
-        
     }
 
-        
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(

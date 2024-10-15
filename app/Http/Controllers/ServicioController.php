@@ -18,89 +18,84 @@ class ServicioController extends Controller
 
     public function index()
     {
-//Muestra los registros de la tabla
-       $consulta = Servicio::with( 'tipoServicio')->where('status', '=', 1)->get();
-       $servicios = $this->cargarDT($consulta, 'index');
-       $tecnicos = Tecnico::all();
-       return view('servicio.index', compact('servicios', 'tecnicos')); 
-
+        //Muestra los registros de la tabla
+        $consulta = Servicio::with('tipoServicio')->where('status', '=', 1)->get();
+        $servicios = $this->cargarDT($consulta, 'index');
+        $tecnicos = Tecnico::all();
+        return view('servicio.index', compact('servicios', 'tecnicos'));
     }
 
     public function realizado()
-{
-    
-    $consulta = Servicio::with('tipoServicio')->where('status', '=', 2)->get();
-    $servicios = $this->cargarDT($consulta, 'realizado');
-    return view('servicio.realizado', compact('servicios'));
-}
+    {
 
-public function realizarServicio(Request $request)
-{
-    $servicio = Servicio::find($request->servicioId);
-    if (!$servicio) {
-        return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
-    }
-    $servicio->status = 2;
-
-    $tecnico = Tecnico::find($request->tecnico_id);
-    if ($tecnico) {
-        $servicio->tecnico_id = $tecnico->id; 
-    } else {
-        return redirect()->route('servicios.index')->with('error', 'Técnico no encontrado.');
+        $consulta = Servicio::with('tipoServicio')->where('status', '=', 2)->get();
+        $servicios = $this->cargarDT($consulta, 'realizado');
+        return view('servicio.realizado', compact('servicios'));
     }
 
-    $servicio->descripcion = $request->descripcion;
+    public function realizarServicio(Request $request)
+    {
+        $servicio = Servicio::find($request->servicioId);
+        if (!$servicio) {
+            return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
+        }
+        $servicio->status = 2;
 
-    $servicio->save();
+        $tecnico = Tecnico::find($request->tecnico_id);
+        if ($tecnico) {
+            $servicio->tecnico_id = $tecnico->id;
+        } else {
+            return redirect()->route('servicios.index')->with('error', 'Técnico no encontrado.');
+        }
 
-    if ($servicio->tiposervicio) {
-        $tipoServicioNombre = $servicio->tiposervicio->nombre;
-    } else {
-        return redirect()->route('servicios.index')->with('error', 'Tipo de servicio no encontrado.');
+        $servicio->descripcion = $request->descripcion;
+
+        $servicio->save();
+
+        if ($servicio->tiposervicio) {
+            $tipoServicioNombre = $servicio->tiposervicio->nombre;
+        } else {
+            return redirect()->route('servicios.index')->with('error', 'Tipo de servicio no encontrado.');
+        }
+
+        $data = [
+            'tipo_servicio' => $tipoServicioNombre,
+            'nombre_solicitante' => $servicio->nombre_solicitante,
+            'apellido_solicitante' => $servicio->apellido_solicitante,
+            'fecha' => $servicio->fecha,
+            'descripcion' => $servicio->descripcion,
+            'tecnico' => $tecnico->nombre,
+        ];
+
+        Mail::to($servicio->email)->send(new ServicioRealizado($data));
+        return redirect()->route('servicios.index')->with('message', 'Servicio realizado y correo enviado.');
     }
 
-    $data = [
-        'tipo_servicio' => $tipoServicioNombre,
-        'nombre_solicitante' => $servicio->nombre_solicitante,
-        'apellido_solicitante' => $servicio->apellido_solicitante,
-        'fecha' => $servicio->fecha,
-        'descripcion' => $servicio->descripcion, 
-        'tecnico' => $tecnico->nombre, 
-    ];
+    public function infoServicio($id, Request $request)
+    {
+        $servicio = Servicio::with('tipoServicio')->find($id);
+        if (!$servicio) {
+            return redirect()->route('servicios.index')->with('error', 'El servicio no existe.');
+        }
 
-    // Enviar correo con los detalles del servicio realizado
-    Mail::to($servicio->email)->send(new ServicioRealizado($data));
+        $data = [
+            'descripcion' => $request->session()->get('descripcion', 'No hay descripción disponible')
+        ];
 
-    // Redirigir con un mensaje de éxito
-    return redirect()->route('servicios.index')->with('message', 'Servicio realizado y correo enviado.');
-}
-
-
-public function infoServicio($id, Request $request)
-{
-    $servicio = Servicio::with('tipoServicio')->find($id);
-    if (!$servicio) {
-        return redirect()->route('servicios.index')->with('error', 'El servicio no existe.');
+        return view('servicio.info', compact('servicio', 'data'));
     }
 
-    $data = [
-        'descripcion' => $request->session()->get('descripcion', 'No hay descripción disponible')
-    ];
+    public function cargarDT($consulta, $modo)
+    {
+        $servicios = [];
+        foreach ($consulta as $key => $value) {
+            // rutas
+            $eliminar = route('delete-servicio', $value['id']);
+            $info = route('info-servicio', $value['id']);
 
-    return view('servicio.info', compact('servicio', 'data'));
-}
+            if ($modo === 'index') {
 
-public function cargarDT($consulta, $modo)
-{
-    $servicios = [];
-    foreach ($consulta as $key => $value) {
-        // rutas
-        $eliminar = route('delete-servicio', $value['id']);
-        $info = route('info-servicio', $value['id']);
-
-        if ($modo === 'index') {
-        
-            $acciones = '
+                $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
                     <a href="javascript:void(0);" role="button" class="btn btn-outline-success" title="Servicio realizado" data-bs-toggle="modal" data-bs-target="#modalRealizado" onclick="openRealizadoModal(' . $value['id'] . ')">
@@ -115,9 +110,9 @@ public function cargarDT($consulta, $modo)
                 </div>
             </div>
             ';
-        } elseif ($modo === 'realizado') {
-            
-            $acciones = '
+            } elseif ($modo === 'realizado') {
+
+                $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
                     <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
@@ -129,37 +124,37 @@ public function cargarDT($consulta, $modo)
                 </div>
             </div>
             ';
+            }
+
+            $servicios[$key] = array(
+                $acciones,
+                $value['id'],
+                $value->tipoServicio->nombre,
+                $value['fecha'],
+                $value['hora'],
+                $value['nombre_solicitante'],
+                $value['apellido_solicitante'],
+            );
+
+            if ($modo === 'index') {
+                $servicios[$key][] = $value['tipo'];
+            }
         }
 
-        $servicios[$key] = array(
-            $acciones,
-            $value['id'],
-            $value->tipoServicio->nombre,
-            $value['fecha'],
-            $value['hora'],
-            $value['nombre_solicitante'],
-            $value['apellido_solicitante'],
-        );
-
-        if ($modo === 'index') {
-            $servicios[$key][] = $value['tipo'];
-        }
+        return $servicios;
     }
-
-    return $servicios;
-}
 
 
     public function create()
     {
-        
-        $tipoServicios = TipoServicio::where('status', 1)->get(); 
+
+        $tipoServicios = TipoServicio::where('status', 1)->get();
         return view('servicio.create', compact('tipoServicios'));
     }
 
-    Public function store(Request $request)
+    public function store(Request $request)
     {
-        
+
         $this->validate($request, [
             'tipo_servicio_id' => 'required|exists:tipo_servicios,id',
             'fecha' => 'required',
@@ -172,13 +167,13 @@ public function cargarDT($consulta, $modo)
             'contacto' => 'required|digits:10',
             'tipo' => 'required|in:Profesor,Alumno',
             'email' => [
-                        'required',
-                        'email',
-                        //'regex:/^[a-zA-Z0-9._%+-]+@(academicos|alumnos)\.udg\.mx$/'
-                        ],
- 
+                'required',
+                'email',
+                //'regex:/^[a-zA-Z0-9._%+-]+@(academicos|alumnos)\.udg\.mx$/'
+            ],
+
         ]);
-    
+
         $servicio = new Servicio();
         $servicio->tipo_servicio_id = $request->input('tipo_servicio_id');
         $servicio->fecha = $request->input('fecha');
@@ -192,15 +187,14 @@ public function cargarDT($consulta, $modo)
         $servicio->tipo = $request->input('tipo');
         $servicio->email = $request->input('email');
         $servicio->status = 1;
-    
+
         $servicio->save();
-    
+
         Mail::to($servicio->email)->send(new ServicioSolicitado($servicio));
-   
-             return redirect()->route('servicios.create')->with(array(
-                "message" => "Servicio solicitado exitosamente, se te ha enviado un correo con los datos del servicio que solicitaste"
+        return redirect()->route('servicios.create')->with(array(
+            "message" => "Servicio solicitado exitosamente, se te ha enviado un correo con los datos del servicio que solicitaste"
         ));
-    } 
+    }
 
     public function delete_servicio($servicio_id)
     {
@@ -216,8 +210,5 @@ public function cargarDT($consulta, $modo)
                 "message" => "Este servicio ya no existe"
             ));
         }
-        
     }
-
-    
 }

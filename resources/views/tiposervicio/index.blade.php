@@ -31,12 +31,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Los datos se cargarán dinámicamente aquí -->
                         </tbody>
                     </table>
                 </div>
             </div>
-
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -74,7 +72,9 @@
             $('#example').DataTable({
                 data: data,
                 pageLength: 100,
-                order: [[0, "desc"]],
+                order: [
+                    [0, "desc"]
+                ],
                 responsive: true,
                 dom: '<"row mb-3"<"col-lg-3"l><"col-lg-5"B><"col-lg-4"f>>rtip',
                 buttons: ['copy', 'excel', {

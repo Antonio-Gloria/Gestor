@@ -11,7 +11,8 @@
 
         <div class="card shadow">
             <div class="card-body">
-                <form action="{{ route('tiposervicios.update', $tiposervicio->id) }}" method="POST" enctype="multipart/form-data" class="col-lg-7">
+                <form action="{{ route('tiposervicios.update', $tiposervicio->id) }}" method="POST"
+                    enctype="multipart/form-data" class="col-lg-7">
                     @csrf
                     @method('PUT')
 
@@ -27,12 +28,14 @@
 
                     <div class="form-group mb-3">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ $tiposervicio->nombre }}" required>
+                        <input type="text" class="form-control" id="nombre" name="nombre"
+                            value="{{ $tiposervicio->nombre }}" required>
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label for="descripcion">Descripción</label>
-                        <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ $tiposervicio->descripcion }}" required>
+                        <input type="text" class="form-control" id="descripcion" name="descripcion"
+                            value="{{ $tiposervicio->descripcion }}" required>
                     </div>
 
                     <div class="d-flex justify-content-between">

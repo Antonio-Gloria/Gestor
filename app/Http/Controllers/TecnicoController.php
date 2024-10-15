@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 
 class TecnicoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-       $vs_tecnicos = Tecnico::where('status', '=', 1)->get();
-       $tecnicos = $this->cargarDT($vs_tecnicos);
-       return view('tecnico.index', compact('tecnicos')); 
+        $vs_tecnicos = Tecnico::where('status', '=', 1)->get();
+        $tecnicos = $this->cargarDT($vs_tecnicos);
+        return view('tecnico.index', compact('tecnicos'));
     }
 
     public function cargarDT($consulta)
@@ -31,13 +29,13 @@ class TecnicoController extends Controller
                        <i class="far fa-edit"></i>
                    </a>
                    
-                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger"title="Eliminar" onclick="modal('.$value['id'].')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
+                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger"title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
                        <i class="far fa-trash-alt"></i>
                    </a>
                </div>
            </div>
  ';
- 
+
             $tecnicos[$key] = array(
                 $acciones,
                 $value['id'],
@@ -45,33 +43,26 @@ class TecnicoController extends Controller
                 $value['apellido'],
                 $value['email'],
                 $value['telefono'],
-               
+
             );
         }
- 
+
         return $tecnicos;
     }
- 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('tecnico.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    Public function store(Request $request)
-{
-//validación de campos requeridos
-$this->validate($request, [
+    public function store(Request $request)
+    {
+
+        $this->validate($request, [
             'nombre' => 'required',
             'apellido' => 'required',
-            'email'=> 'required',
+            'email' => 'required',
             'telefono' => 'required',
-           
+
         ]);
 
 
@@ -86,7 +77,7 @@ $this->validate($request, [
         return redirect()->route('tecnicos.index')->with(array(
             'message' => 'El técnico se ha agregado correctamente'
         ));
-}
+    }
 
     public function edit(string $id)
     {

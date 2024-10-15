@@ -60,8 +60,6 @@
                 }
             </script>
 
-
-
             <!-- Modal -->
             <div class="modal fade" id="modalRealizado" tabindex="-1" aria-labelledby="modalRealizadoLabel"
                 aria-hidden="true">
