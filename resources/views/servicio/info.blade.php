@@ -5,9 +5,9 @@
     <h2 class="text-center">Información del Servicio</h2>
     <hr>
     <br>
-    
-    <hr class="my-4">
-    
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ route('servicios.index') }}" class="btn btn-outline-primary">Regresar</a>
+    </div>
     <table class="table">
         <tbody>
             <tr>
@@ -60,11 +60,6 @@
    
 </div>
 <div>
-    <p class="text-right">
-        <a href="{{ route('servicios.index') }}" class="btn btn-outline-primary">
-            Regresar
-        </a>
-    </p>
-</div>
+       </div>
 
 @endsection

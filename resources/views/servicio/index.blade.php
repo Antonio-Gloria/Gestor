@@ -10,7 +10,7 @@
             @endif
         </div>
         <div class="row">
-            <h2 class="text">Lista de Servicios por Realizar</h2>
+            <h2 class="text-center">Lista de Servicios por Realizar</h2>
             <hr>
             <br>
             <!-- <div class="d-flex justify-content-center"> -->
@@ -109,7 +109,6 @@
 @endsection
 
 @section('js')
-
     <script>
         $(document).ready(function() {
             var data = @json($servicios);

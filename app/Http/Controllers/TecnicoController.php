@@ -88,18 +88,6 @@ $this->validate($request, [
         ));
 }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $tecnico = Tecnico::findOrFail($id);
@@ -108,9 +96,6 @@ $this->validate($request, [
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $this->validate($request, [
@@ -130,14 +115,6 @@ $this->validate($request, [
         return redirect()->route('tecnicos.index')->with(array(
             'message' => 'El técnico seleccionado se ha actualizado correctamente'
         ));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function delete_tecnico($tecnico_id)

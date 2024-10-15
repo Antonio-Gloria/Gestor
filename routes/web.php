@@ -11,11 +11,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Ruta para crear servicio sin autenticación
 Route::get('/servicios/create', [ServicioController::class, 'create'])->name('servicios.create');
-
-// Protege las demás rutas del recurso 'servicios' con el middleware auth
 Route::resource('/servicios', App\Http\Controllers\ServicioController::class)
     ->except(['create'])  // Excluir create del middleware
     ->middleware('auth');
@@ -29,5 +25,4 @@ Route::get('delete-servicio/{servicio_id}', [App\Http\Controllers\ServicioContro
 Route::get('/servicio/realizado', [ServicioController::class, 'realizado'])->name('servicios.realizado')->middleware('auth');
 Route::get('/info-servicio', [ServicioController::class, 'info'])->name('info-servicio')->middleware('auth');
 Route::get('/servicio/info/{id}', [ServicioController::class, 'infoServicio'])->name('info-servicio')->middleware('auth');
-Route::post('/servicio/realizar', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio')->middleware('auth');
 Route::post('/realizar-servicio', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio')->middleware('auth');

@@ -36,7 +36,6 @@ class ServicioController extends Controller
 
 public function realizarServicio(Request $request)
 {
-    // Buscar el servicio por ID
     $servicio = Servicio::find($request->servicioId);
     if (!$servicio) {
         return redirect()->route('servicios.index')->with('error', 'Servicio no encontrado.');
@@ -45,7 +44,7 @@ public function realizarServicio(Request $request)
 
     $tecnico = Tecnico::find($request->tecnico_id);
     if ($tecnico) {
-        $servicio->tecnico_id = $tecnico->id; // Guardar el ID del técnico
+        $servicio->tecnico_id = $tecnico->id; 
     } else {
         return redirect()->route('servicios.index')->with('error', 'Técnico no encontrado.');
     }
@@ -84,7 +83,6 @@ public function infoServicio($id, Request $request)
         return redirect()->route('servicios.index')->with('error', 'El servicio no existe.');
     }
 
-    // Recuperar la descripción de la sesión
     $data = [
         'descripcion' => $request->session()->get('descripcion', 'No hay descripción disponible')
     ];
@@ -96,13 +94,12 @@ public function cargarDT($consulta, $modo)
 {
     $servicios = [];
     foreach ($consulta as $key => $value) {
-        // Generar las rutas
+        // rutas
         $eliminar = route('delete-servicio', $value['id']);
         $info = route('info-servicio', $value['id']);
 
-        // Determinar las acciones según el modo
         if ($modo === 'index') {
-            // Acciones para el modo "index"
+        
             $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
@@ -119,7 +116,7 @@ public function cargarDT($consulta, $modo)
             </div>
             ';
         } elseif ($modo === 'realizado') {
-            // Acciones para el modo "realizado"
+            
             $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
@@ -134,7 +131,6 @@ public function cargarDT($consulta, $modo)
             ';
         }
 
-        // Formar el array de servicios
         $servicios[$key] = array(
             $acciones,
             $value['id'],
@@ -145,7 +141,6 @@ public function cargarDT($consulta, $modo)
             $value['apellido_solicitante'],
         );
 
-        // Si es modo index, agregar el campo 'tipo'
         if ($modo === 'index') {
             $servicios[$key][] = $value['tipo'];
         }
@@ -164,7 +159,7 @@ public function cargarDT($consulta, $modo)
 
     Public function store(Request $request)
     {
-        //validación de campos requeridos
+        
         $this->validate($request, [
             'tipo_servicio_id' => 'required|exists:tipo_servicios,id',
             'fecha' => 'required',

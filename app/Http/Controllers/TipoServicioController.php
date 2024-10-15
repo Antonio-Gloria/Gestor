@@ -85,18 +85,6 @@ $this->validate($request, [
         ));
 }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $tiposervicio = TipoServicio::findOrFail($id);
@@ -125,14 +113,6 @@ $this->validate($request, [
         ));
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
     public function delete_tiposervicio($tiposervicio_id)
     {
         $tiposervicio = TipoServicio::find($tiposervicio_id);
