@@ -72,9 +72,7 @@
             $('#example').DataTable({
                 data: data,
                 pageLength: 100,
-                order: [
-                    [0, "desc"]
-                ],
+                order: [[0, "desc"]],
                 responsive: true,
                 dom: '<"row mb-3"<"col-lg-3"l><"col-lg-5"B><"col-lg-4"f>>rtip',
                 buttons: ['copy', 'excel', {

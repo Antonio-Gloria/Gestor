@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateColaboradorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('colaboradors', function (Blueprint $table) {
             $table->id();
-            $
+            $table->string('name');  // Nombre del colaborador
+            $table->string('email')->unique();  // Correo electrónico
+            $table->string('password');  // Contraseña (probablemente encriptada)
             $table->timestamps();
         });
     }
@@ -25,4 +27,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('colaboradors');
     }
-};
+}

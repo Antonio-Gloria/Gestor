@@ -307,8 +307,13 @@ return [
         ],
         [
             'text' => 'Dashboard',
-            'route' => 'home',
+            'route' => 'servicios.index',
             'icon' => 'fas fa-tachometer-alt fa-fw',
+        ],
+        [
+            'text' => 'Usuarios',
+            'route' => 'users.index',
+            'icon' => 'fas fa-users fa-fw',
         ],
         ['header' => 'ADMINISTRADOR'],
         [
