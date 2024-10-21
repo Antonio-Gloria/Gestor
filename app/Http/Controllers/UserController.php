@@ -11,9 +11,10 @@ class UserController extends Controller
     public function __construct()
     {
         // Solo el admin puede gestionar usuarios
-        
-        
-       
+        $this->middleware('can:users.index')->only('index');
+        $this->middleware('can:users.create')->only('create', 'store');
+        $this->middleware('can:users.edit')->only('edit', 'update');
+        $this->middleware('can:users.delete')->only('destroy');
     }
 
     public function index()
