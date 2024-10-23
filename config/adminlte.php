@@ -307,7 +307,7 @@ return [
         ],
         [
             'text' => 'Dashboard',
-            'route' => 'servicios.index',
+            'route' => 'dashboard',
             'icon' => 'fas fa-tachometer-alt fa-fw',
         ],
         [

@@ -29,7 +29,7 @@ Route::resource('/servicios', App\Http\Controllers\ServicioController::class)
     ->middleware('auth');
 
 // Rutas protegidas para usuarios (consolida y asegura que no haya duplicados)
-Route::resource('/users', UserController::class)->middleware('auth');
+Route::resource('/users', UserController::class)->middleware('auth')->except(['show']);
 
 // Rutas de tipos de servicio y técnicos
 Route::resource('/tiposervicios', App\Http\Controllers\TipoServicioController::class)->middleware('auth');
@@ -45,3 +45,4 @@ Route::get('/info-servicio', [ServicioController::class, 'info'])->name('info-se
 Route::get('/servicio/info/{id}', [ServicioController::class, 'infoServicio'])->name('info-servicio')->middleware('auth');
 Route::post('/servicio/realizar', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio')->middleware('auth');
 Route::post('/realizar-servicio', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio')->middleware('auth');
+Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('auth');

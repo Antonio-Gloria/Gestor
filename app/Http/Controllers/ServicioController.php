@@ -18,7 +18,7 @@ class ServicioController extends Controller
 
     public function index()
     {
-        //Muestra los registros de la tabla
+      
         $consulta = Servicio::with('tipoServicio')->where('status', '=', 1)->get();
         $servicios = $this->cargarDT($consulta, 'index');
         $tecnicos = Tecnico::all();
