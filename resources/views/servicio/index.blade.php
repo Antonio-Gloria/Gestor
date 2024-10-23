@@ -102,15 +102,40 @@
                     </div>
                 </div>
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Servicio</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <span id="nombre"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <a href="" id="borrar" class="btn btn-danger">Borrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function() {
-            var data = @json($servicios);
+    <script type="text/javascript">
+        function modal(parametro) {
+            $('#nombre').html('¿Está seguro de eliminar el servicio con ID ' + parametro + '?');
+            let url = "{{ route('delete-servicio', ':id') }}";
+            url = url.replace(':id', parametro);
+            document.getElementById('borrar').href = url;
+        }
 
+        var data = @json($servicios);
+
+        $(document).ready(function() {
             $('#example').DataTable({
                 data: data,
                 pageLength: 100,

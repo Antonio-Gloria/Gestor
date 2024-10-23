@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 class TipoServicioController extends Controller
 {
 
+    public function __construct()
+    {
+        
+        $this->middleware('can:tiposervicios.index')->only('index');
+        $this->middleware('can:tiposervicios.create')->only('create', 'store');
+        $this->middleware('can:tiposervicios.edit')->only('edit', 'update');
+        $this->middleware('can:tiposervicios.delete')->only('delete-tiposervicio');
+    }
+
     public function index()
     {
         $vs_tiposervicios = TipoServicio::where('status', '=', 1)->get();

@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 class TecnicoController extends Controller
 {
 
+    public function __construct()
+    {
+        
+        $this->middleware('can:tecnicos.index')->only('index');
+        $this->middleware('can:tecnicos.create')->only('create', 'store');
+        $this->middleware('can:tecnicos.edit')->only('edit', 'update');
+        $this->middleware('can:tecnicos.delete')->only('delete_tecnico');
+    }
+
     public function index()
     {
         $vs_tecnicos = Tecnico::where('status', '=', 1)->get();

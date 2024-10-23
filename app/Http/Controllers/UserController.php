@@ -15,7 +15,7 @@ class UserController extends Controller
         $this->middleware('can:users.create')->only('create', 'store');
         $this->middleware('can:users.edit')->only('edit', 'update');
         $this->middleware('can:users.delete')->only('destroy');
-        $this->middleware('can:users.dashboard')->only('dasboard');
+        $this->middleware('can:users.dashboard')->only('dashboard');
     }
 
     public function dashboard()

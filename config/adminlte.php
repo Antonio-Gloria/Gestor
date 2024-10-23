@@ -292,8 +292,9 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
-
-    'menu' => [
+    
+    'menu'
+     => [
         // Navbar items:
         [
             'text' => 'search',
@@ -309,27 +310,31 @@ return [
             'text' => 'Dashboard',
             'route' => 'dashboard',
             'icon' => 'fas fa-tachometer-alt fa-fw',
+            'can' => 'users.dashboard'
         ],
         [
             'text' => 'Usuarios',
             'route' => 'users.index',
             'icon' => 'fas fa-users fa-fw',
+            'can' => 'users.index'
         ],
-        ['header' => 'ADMINISTRADOR'],
         [
             'text' => 'Servicios',
             'url' => 'servicios',
             'icon' => 'fab fa-fw fa-buffer',
+            
         ],
         [
             'text' => 'Tipo de servicios',
             'url' => 'tiposervicios',
             'icon' => 'fab fa-fw fa-buffer',
+            'can' => 'tiposervicios.index',
         ],
         [
             'text' => 'Técnicos',
             'url' => 'tecnicos',
             'icon' => 'fab fa-fw fa-buffer',
+            'can' => 'tecnicos.index',
         ],
     ],
 

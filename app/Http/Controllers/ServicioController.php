@@ -12,10 +12,17 @@ use Illuminate\Support\Facades\Mail;
 
 class ServicioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
+    
+    public function __construct()
+    {
+        
+        $this->middleware('can:servicios.index')->only('index');
+        $this->middleware('can:servicios.create')->only('create', 'store');
+        $this->middleware('can:servicios.edit')->only('edit', 'update');
+        $this->middleware('can:delete-servicio')->only('delete_servicio');
+        $this->middleware('can:realizado-servicio')->only('realizado', 'realizarServicio');
+        $this->middleware('can:info-servicio')->only('');
+    }
     public function index()
     {
       
@@ -90,6 +97,7 @@ class ServicioController extends Controller
         $servicios = [];
         foreach ($consulta as $key => $value) {
             // rutas
+            $ruta = "eliminar" . $value['id'];
             $eliminar = route('delete-servicio', $value['id']);
             $info = route('info-servicio', $value['id']);
 
@@ -101,7 +109,7 @@ class ServicioController extends Controller
                     <a href="javascript:void(0);" role="button" class="btn btn-outline-success" title="Servicio realizado" data-bs-toggle="modal" data-bs-target="#modalRealizado" onclick="openRealizadoModal(' . $value['id'] . ')">
                         <i class="fas fa-fw fa-check"></i>
                     </a>
-                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
+                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
                         <i class="far fa-trash-alt"></i>
                     </a>
                     <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">
