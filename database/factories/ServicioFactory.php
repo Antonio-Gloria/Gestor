@@ -27,6 +27,7 @@ class ServicioFactory extends Factory
             'contacto' => $this->faker->phoneNumber,
             'tipo' =>$this->faker->title,
             'status' => 1,
+            'fechaRealizado' => $this->faker->date,
             'email' => $this->faker->email,
             'descripcion'=> $this->faker->text
         ];

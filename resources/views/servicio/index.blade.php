@@ -89,6 +89,11 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="fecha" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="fecha" name="fecha"
+                                        value="{{ old('fecha') }}">
+                                </div>
                             </div>
                             <div class="modal-footer bg-dark text-white">
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">
@@ -178,6 +183,13 @@
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fechaInput = document.getElementById('fecha');
+            fechaInput.value = new Date().toISOString().split('T')[0];
+            fechaInput.readOnly = true;
         });
     </script>
 @endsection

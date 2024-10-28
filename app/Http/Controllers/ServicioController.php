@@ -57,7 +57,8 @@ class ServicioController extends Controller
         }
 
         $servicio->descripcion = $request->descripcion;
-
+        $servicio->fechaRealizado = now();
+        
         $servicio->save();
 
         if ($servicio->tiposervicio) {
@@ -73,6 +74,7 @@ class ServicioController extends Controller
             'fecha' => $servicio->fecha,
             'descripcion' => $servicio->descripcion,
             'tecnico' => $tecnico->nombre,
+            'fechaRealizado' => $servicio->fechaRealizado,
         ];
 
         Mail::to($servicio->email)->send(new ServicioRealizado($data));
@@ -143,6 +145,7 @@ class ServicioController extends Controller
                 $value['hora'],
                 $value['nombre_solicitante'],
                 $value['apellido_solicitante'],
+                $value['fechaRealizado'],
             );
 
             if ($modo === 'index') {

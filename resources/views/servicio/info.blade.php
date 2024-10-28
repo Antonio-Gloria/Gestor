@@ -54,6 +54,10 @@
                     <th>Descripción:</th>
                     <td>{{ $servicio->descripcion ?? 'No hay descripción disponible' }}</td>
                 </tr>
+                <tr>
+                    <th>Fecha de realización</th>
+                    <td>{{ $servicio->fechaRealizado ?? 'No se ha realizado'}} </td>
+                </tr>
             </tbody>
         </table>
     </div>

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('contacto', 50);
             $table->string('tipo', 50);
             $table->integer('status');
+            $table->date('fechaRealizado')->nullable();
             $table->string('email');
             $table->string( 'descripcion', 350)->nullable();
             $table->timestamps();

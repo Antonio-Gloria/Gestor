@@ -31,6 +31,7 @@
                                 <th>Hora</th>
                                 <th>Nombre del solicitante</th>
                                 <th>Apellido del solicitante</th>
+                                <th>Fecha de realización</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,6 +44,7 @@
                                     <td>{{ $servicio[4] }}</td> <!-- Hora -->
                                     <td>{{ $servicio[5] }}</td> <!-- Nombre del solicitante -->
                                     <td>{{ $servicio[6] }}</td> <!-- Apellido del solicitante -->
+                                    <td> {{$servicio[7]}} </td>
                                 </tr>
                             @endforeach
                         </tbody>

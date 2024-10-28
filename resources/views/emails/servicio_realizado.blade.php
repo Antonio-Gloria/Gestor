@@ -47,6 +47,7 @@
         <p><strong>Fecha:</strong> {{ $data['fecha'] }}</p>
         <p><strong>Descripción:</strong> {{ $data['descripcion'] }}</p>
         <p><strong>Técnico:</strong> {{ $data['tecnico'] }}</p>
+        <p><strong>Fecha de realización</strong> {{ $data['fechaRealizado']}} </p>
     </div>
 
     <p>Gracias por solicitar nuestros servicios.</p>

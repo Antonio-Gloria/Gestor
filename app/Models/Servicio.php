@@ -22,6 +22,7 @@ class Servicio extends Model
         'contacto',
         'tipo',
         'email',
+        'fechaRealizado',
 
     ];
 
