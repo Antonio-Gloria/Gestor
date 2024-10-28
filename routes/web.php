@@ -22,11 +22,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Ruta para crear servicio sin autenticación
 Route::get('/servicios/create', [ServicioController::class, 'create'])->name('servicios.create');
+Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store');
 
-// Protege las demás rutas del recurso 'servicios' con el middleware auth
+
 Route::resource('/servicios', App\Http\Controllers\ServicioController::class)
-    ->except(['create'])  // Excluir create del middleware
+    ->except(['create', 'store'])
     ->middleware('auth');
+
 
 // Rutas protegidas para usuarios (consolida y asegura que no haya duplicados)
 Route::resource('/users', UserController::class)->middleware('auth')->except(['show']);

@@ -12,20 +12,21 @@ use Illuminate\Support\Facades\Mail;
 
 class ServicioController extends Controller
 {
-    
+
     public function __construct()
     {
-        
         $this->middleware('can:servicios.index')->only('index');
-        $this->middleware('can:servicios.create')->only('create', 'store');
         $this->middleware('can:servicios.edit')->only('edit', 'update');
         $this->middleware('can:delete-servicio')->only('delete_servicio');
-        $this->middleware('can:realizado-servicio')->only('realizado', 'realizarServicio');
-        $this->middleware('can:info-servicio')->only('');
+        $this->middleware('can:realizado-servicio')->only('realizadoServicio');
+        $this->middleware('can:delete-servicio')->only('deleteServicio');
+        $this->middleware('can:info-servicio')->only('infoServicio');
+        $this->middleware('can:realizar-servicio')->only('realizarServicio');
+
     }
     public function index()
     {
-      
+
         $consulta = Servicio::with('tipoServicio')->where('status', '=', 1)->get();
         $servicios = $this->cargarDT($consulta, 'index');
         $tecnicos = Tecnico::all();
