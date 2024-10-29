@@ -4,6 +4,7 @@ use App\Http\Controllers\ServicioController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
+Use App\Http\Controllers\DashboardController;
 
 // Rutas protegidas para usuarios
 Route::middleware(['auth', 'can:users.create'])->group(function () {
@@ -37,7 +38,6 @@ Route::resource('/users', UserController::class)->middleware('auth')->except(['s
 Route::resource('/tiposervicios', App\Http\Controllers\TipoServicioController::class)->middleware('auth');
 Route::resource('/tecnicos', App\Http\Controllers\TecnicoController::class)->middleware('auth');
 
-// Otras rutas con autenticación
 Route::get('delete-tiposervicio/{tiposervicio_id}', [App\Http\Controllers\TipoServicioController::class, 'delete_tiposervicio'])->name('delete-tiposervicio')->middleware('auth');
 Route::get('delete-tecnico/{tecnico_id}', [App\Http\Controllers\TecnicoController::class, 'delete_tecnico'])->name('delete-tecnico')->middleware('auth');
 Route::get('realizado-servicio/{servicio_id}', [App\Http\Controllers\ServicioController::class, 'realizado_servicio'])->name('realizado-servicio')->middleware('auth');
