@@ -1,30 +1,34 @@
 <?php
 
-    namespace App\Http\Controllers;
+namespace App\Http\Controllers;
 
-use App\Models\Servicio;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Servicio; // Importa el modelo de la tabla "servicios"
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Obtén el conteo de servicios por mes
-        $serviciosPorMes = Servicio::selectRaw('MONTH(fecha) as mes, COUNT(*) as cantidad')
-            ->groupBy('mes')
-            ->orderBy('mes')
+        // Obtén los datos y calcula la diferencia en días entre "fecha" y "fechaRealizado"
+        $data = Servicio::select(
+                DB::raw('YEAR(fecha) as year'),
+                DB::raw('WEEK(fecha) as week'),
+                DB::raw('AVG(DATEDIFF(fechaRealizado, fecha)) as avg_days')
+            )
+            ->whereNotNull('fechaRealizado') // Excluye registros sin fecha de realización
+            ->groupBy('year', 'week') // Agrupa por año y semana
+            ->orderBy('year')
+            ->orderBy('week')
             ->get();
 
-        // Extrae las etiquetas y los datos en formato adecuado para el gráfico
-        $meses = $serviciosPorMes->pluck('mes')->map(function ($mes) {
-            return Carbon::create()->month($mes)->locale('es')->monthName; // Muestra nombre del mes en español
-        });
+        // Crea las etiquetas (semanas) y los datos (diferencias de días promedio)
+        $labels = $data->map(fn($item) => 'Semana ' . $item->week . ' - ' . $item->year);
+        $daysDifference = $data->map(fn($item) => round($item->avg_days, 2));
 
-        $cantidades = $serviciosPorMes->pluck('cantidad');
-
-        // Pasar los datos como JSON a la vista
-        return view('dashboard', compact('meses', 'cantidades'));
+        // Pasa las variables a la vista
+        return view('dashboard', compact('labels', 'daysDifference'));
     }
 }
-
