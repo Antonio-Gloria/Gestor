@@ -8,17 +8,13 @@ use Spatie\Permission\Models\Permission;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
         // roles
         $admin = Role::create(['name' => 'Admin']);
         $colaborador = Role::create(['name' => 'Colaborador']);
-
         // permisos
-      
         Permission::create(['name' => 'servicios.index'])->syncRoles($admin, $colaborador);
         Permission::create(['name' => 'servicios.show'])->syncRoles($admin, $colaborador);
         Permission::create(['name' => 'servicios.edit'])->syncRoles($admin, $colaborador);
@@ -42,6 +38,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'users.edit'])->syncRoles($admin);
         Permission::create(['name' => 'users.delete'])->syncRoles($admin);
         Permission::create(['name' => 'assign.roles'])->syncRoles($admin);
+        Permission::create(['name' => 'dashboard.index'])->syncRoles($admin);
 
     }
 }

@@ -310,7 +310,7 @@ return [
             'text' => 'Dashboard',
             'route' => 'dashboard',
             'icon' => 'fas fa-tachometer-alt fa-fw',
-            'can' => 'users.dashboard'
+            'can' => 'dashboard.index'
         ],
         [
             'text' => 'Usuarios',

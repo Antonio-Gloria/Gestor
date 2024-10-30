@@ -8,40 +8,46 @@
 
 @section('content')
     <p>Bienvenido al panel de administración</p>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="myChart" width="100" height="100"></canvas>
 @stop
 
 @section('js')
-    <!-- Carga de Chart.js -->
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        // Valores de ejemplo; reemplázalos por valores enviados desde el controlador
-        const labels = ["col1", "col2", "col3"];
-        const data = [10, 9, 15];
+        document.addEventListener("DOMContentLoaded", function () {
+            const ctx = document.getElementById("myChart").getContext("2d");
 
-        // Configuración del gráfico
-        const ctx = document.getElementById("myChart").getContext("2d");
-        const myChart = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: [col1, col2. col3],
-                datasets: [{
-                    label: "Num datos",
-                    data: [10, 9, 15],
-                    backgroundColor: "rgba(75, 192, 192, 0.2)",
-                    borderColor: "rgba(75, 192, 192, 1)",
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            const myChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: @json($labels), 
+                    datasets: [{
+                        label: "Diferencia promedio en días por semana",
+                        data: @json($daysDifference), 
+                        backgroundColor: "rgba(75, 192, 192, 0.2)",
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Días'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Semanas'
+                            }
+                        }
                     }
                 }
-            }
+            });
         });
     </script>
 @stop

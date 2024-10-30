@@ -47,6 +47,5 @@ Route::get('/info-servicio', [ServicioController::class, 'info'])->name('info-se
 Route::get('/servicio/info/{id}', [ServicioController::class, 'infoServicio'])->name('info-servicio')->middleware('auth');
 Route::post('/servicio/realizar', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio')->middleware('auth');
 Route::post('/realizar-servicio', [ServicioController::class, 'realizarServicio'])->name('realizar-servicio')->middleware('auth');
-Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
