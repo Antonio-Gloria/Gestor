@@ -82,7 +82,7 @@
         $(document).ready(function() {
             $('#example').DataTable({
                 data: data,
-                pageLength: 100,
+                pageLength: 10,
                 order: [
                     [0, "desc"]
                 ],
