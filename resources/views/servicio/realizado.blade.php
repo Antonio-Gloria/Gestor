@@ -63,7 +63,7 @@
                             <span id="nombre"></span>
                         </div>
                         <div class="modal-footer">
-                            <a href="" id="solicitar" class="btn btn-danger">Agregar</a>
+                            <a href="" id="solicitar" class="btn btn-danger">Eliminar</a>
                         </div>
                     </div>
                 </div>
@@ -76,11 +76,10 @@
     <script type="text/javascript">
         function modal(parametro) {
             console.log(parametro);
-            $('#nombre').html(parametro);
-
-            let url = "{{ route('realizado-servicio', ':id') }}";
+            $('#nombre').html('¿Está seguro de eliminar el servicio con ID ' + parametro + '?');
+            let url = "{{ route('delete-servicio', ':id') }}";
             url = url.replace(':id', parametro);
-            document.getElementById('solicitar').href = url;
+            document.getElementById('borrar').href = url;
         }
 
         var data = @json($servicios);

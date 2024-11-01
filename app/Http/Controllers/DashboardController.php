@@ -14,46 +14,43 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('can:dashboard.index')->only('index');
-   
     }
     public function index()
-{
-    
-    $servicios = Servicio::select('fecha', 'fechaRealizado')
-        ->get()
-        ->groupBy(function($date) {
-            return date('W-Y', strtotime($date->fecha)); 
-        });
+    {
 
-    $labels = [];
-    $daysDifference = [];
+        $servicios = Servicio::select('fecha', 'fechaRealizado')
+            ->get()
+            ->groupBy(function ($date) {
+                return date('W-Y', strtotime($date->fecha));
+            })
+            ->sortByDesc(function($_, $key){
+                return $key;
+            });
+            
+        $labels = [];
+        $daysDifference = [];
 
-    foreach ($servicios as $weekYear => $records) {
-       
-        [$week, $year] = explode('-', $weekYear);
+        foreach ($servicios as $weekYear => $records) {
 
-        
-        $referenceDate = $records->first()->fecha;
-        $startDate = date('Y-m-d', strtotime("{$year}-W{$week}-1")); 
-        $endDate = date('Y-m-d', strtotime("{$year}-W{$week}-7"));
+            [$week, $year] = explode('-', $weekYear);
 
-        
-        $totalDays = 0;
-        $count = count($records);
+            $referenceDate = $records->first()->fecha;
+            $startDate = date('Y-m-d', strtotime("{$year}-W{$week}-1"));
+            $endDate = date('Y-m-d', strtotime("{$year}-W{$week}-7"));
+            $totalDays = 0;
+            $count = count($records);
 
-        foreach ($records as $record) {
-            $diff = (strtotime($record->fechaRealizado) - strtotime($record->fecha)) / 86400;
-            $totalDays += $diff;
+            foreach ($records as $record) {
+                $diff = (strtotime($record->fechaRealizado) - strtotime($record->fecha)) / 86400;
+                $totalDays += $diff;
+            }
+
+            $averageDays = $count ? $totalDays / $count : 0;
+
+            $labels[] = "Semana {$week} ({$startDate} - {$endDate})";
+            $daysDifference[] = $averageDays;
         }
 
-        $averageDays = $count ? $totalDays / $count : 0;
-
-        $labels[] = "Semana {$week} ({$startDate} - {$endDate})";
-        $daysDifference[] = $averageDays;
+        return view('dashboard', compact('labels', 'daysDifference'));
     }
-
-    return view('dashboard', compact('labels', 'daysDifference'));
-}
-
-
 }

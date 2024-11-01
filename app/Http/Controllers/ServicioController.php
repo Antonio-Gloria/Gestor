@@ -126,7 +126,7 @@ class ServicioController extends Controller
                 $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
-                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" >
+                    <a href="' . $eliminar . '" role="button" class="btn btn-outline-danger" title="Eliminar" onclick="modal(' . $value['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal"">
                         <i class="far fa-trash-alt"></i>
                     </a>
                     <a href="' . $info . '" role="button" class="btn btn-outline-info" title="Más información">

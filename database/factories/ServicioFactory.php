@@ -16,7 +16,7 @@ class ServicioFactory extends Factory
         return [
             
             'tipo_servicio_id' => 1,
-            'fecha' => date('Y-m-d', strtotime('-' . rand(1, 2) . ' days')), 
+            'fecha' => date('Y-m-d', strtotime('-' . rand(3, 10) . ' days')), 
             'hora' => $this->faker->time,
             'estado' => $this->faker->name,
             'tecnico_id'=>null,
@@ -27,7 +27,8 @@ class ServicioFactory extends Factory
             'contacto' => $this->faker->phoneNumber,
             'tipo' => $this->faker->title,
             'status' => 2,
-            'fechaRealizado' => date('Y-m-d', strtotime('+' . rand(1, 2) . ' days')), 
+            'fechaRealizado' => date('Y-m-d', strtotime('-' . rand(1, 3
+            ) . ' days')), 
             'email' => $this->faker->email,
             'descripcion' => $this->faker->text
         ];
