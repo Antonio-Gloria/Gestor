@@ -32,12 +32,15 @@
 </nav>
 @endif
     <div class="overlay">
-        <div class="content me-2">
+        <div class="content me-2 text-center">
             <h1>Bienvenido a Servicios CUCSH</h1>
             <p>Aquí puedes realizar una solicitud de servicio de manera rápida y sencilla</p>
-
-            <a href="{{ route('servicios.create') }}" class="btn btn-outline-light me-2">Solicitar un servicio</a>
-            <a href="http://www.cucsh.udg.mx/" class="btn btn-outline-light me-2">Ir a CUCSH</a>
+        
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+                <a href="{{ route('servicios.create') }}" class="btn btn-outline-light">Solicitar un servicio</a>
+                <a href="http://www.cucsh.udg.mx/" class="btn btn-outline-light">Ir a CUCSH</a>
+            </div>
         </div>
+        
     </div>
 @endsection
