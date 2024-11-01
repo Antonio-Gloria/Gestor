@@ -17,22 +17,43 @@ class DashboardController extends Controller
    
     }
     public function index()
-    {
+{
+    
+    $servicios = Servicio::select('fecha', 'fechaRealizado')
+        ->get()
+        ->groupBy(function($date) {
+            return date('W-Y', strtotime($date->fecha)); 
+        });
+
+    $labels = [];
+    $daysDifference = [];
+
+    foreach ($servicios as $weekYear => $records) {
        
-        $data = Servicio::select(
-                DB::raw('YEAR(fecha) as year'),
-                DB::raw('WEEK(fecha) as week'),
-                DB::raw('AVG(DATEDIFF(fechaRealizado, fecha)) as avg_days')
-            )
-            ->whereNotNull('fechaRealizado') 
-            ->groupBy('year', 'week') 
-            ->orderBy('year')
-            ->orderBy('week')
-            ->get();
+        [$week, $year] = explode('-', $weekYear);
 
-        $labels = $data->map(fn($item) => 'Semana ' . $item->week . ' - ' . $item->year);
-        $daysDifference = $data->map(fn($item) => round($item->avg_days, 2));
+        
+        $referenceDate = $records->first()->fecha;
+        $startDate = date('Y-m-d', strtotime("{$year}-W{$week}-1")); 
+        $endDate = date('Y-m-d', strtotime("{$year}-W{$week}-7"));
 
-        return view('dashboard', compact('labels', 'daysDifference'));
+        
+        $totalDays = 0;
+        $count = count($records);
+
+        foreach ($records as $record) {
+            $diff = (strtotime($record->fechaRealizado) - strtotime($record->fecha)) / 86400;
+            $totalDays += $diff;
+        }
+
+        $averageDays = $count ? $totalDays / $count : 0;
+
+        $labels[] = "Semana {$week} ({$startDate} - {$endDate})";
+        $daysDifference[] = $averageDays;
     }
+
+    return view('dashboard', compact('labels', 'daysDifference'));
+}
+
+
 }

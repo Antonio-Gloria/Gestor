@@ -6,7 +6,8 @@
         <hr>
         <br>
         <div class="d-flex justify-content-end mb-3">
-            <a href="{{ route('servicios.index') }}" class="btn btn-outline-primary">Regresar</a>
+            <a href="{{ route('servicios.index') }}" class="btn btn-outline-primary me-2">Regresar a servicios</a>
+            <a href="{{ route('servicios.realizado') }}" class="btn btn-outline-primary ">Regresar a servicios realizados</a>
         </div>
         <table class="table">
             <tbody>

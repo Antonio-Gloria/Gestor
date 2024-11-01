@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -23,7 +24,7 @@ class ServicioRealizado extends Mailable
     public function build()
     {
         return $this->view('emails.servicio_solicitado')
-            ->subject('Nuevo Servicio Solicitado')
+            ->subject('Servicio Realizado')
             ->with([
                 'servicio' => $this->data,
             ]);
@@ -32,6 +33,7 @@ class ServicioRealizado extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('servicios@cucsh.com', 'Servicios CUCSH'),
             subject: 'Servicio Realizado',
         );
     }

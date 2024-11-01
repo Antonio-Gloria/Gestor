@@ -14,9 +14,9 @@ class ServicioFactory extends Factory
     public function definition()
     {
         return [
-            // Definir los campos con datos falsos aquí
+            
             'tipo_servicio_id' => 1,
-            'fecha' => date('Y-m-d', strtotime('-' . rand(1, 5) . ' days')), // Fecha aleatoria entre hoy y 5 días atrás
+            'fecha' => date('Y-m-d', strtotime('-' . rand(1, 2) . ' days')), 
             'hora' => $this->faker->time,
             'estado' => $this->faker->name,
             'tecnico_id'=>null,
@@ -26,8 +26,8 @@ class ServicioFactory extends Factory
             'codigo' => $this->faker->randomNumber,
             'contacto' => $this->faker->phoneNumber,
             'tipo' => $this->faker->title,
-            'status' => 1,
-            'fechaRealizado' => date('Y-m-d', strtotime('+' . rand(1, 5) . ' days')), // Fecha aleatoria entre hoy y 5 días adelante
+            'status' => 2,
+            'fechaRealizado' => date('Y-m-d', strtotime('+' . rand(1, 2) . ' days')), 
             'email' => $this->faker->email,
             'descripcion' => $this->faker->text
         ];

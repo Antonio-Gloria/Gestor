@@ -145,17 +145,19 @@ class ServicioController extends Controller
                 $value['hora'],
                 $value['nombre_solicitante'],
                 $value['apellido_solicitante'],
-                $value['fechaRealizado'],
+
             );
+
+            if ($modo !== 'index') {
+                $servicios[$key][] = $value['fechaRealizado'];
+            }
 
             if ($modo === 'index') {
                 $servicios[$key][] = $value['tipo'];
             }
         }
-
         return $servicios;
     }
-
 
     public function create()
     {

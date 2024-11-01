@@ -33,7 +33,7 @@ class ServicioSolicitado extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('servicios@cucsh.com', 'Servicios'),
+            from: new Address('servicios@cucsh.com', 'Servicios CUCSH'),
             subject: 'Servicio Solicitado',
 
         );

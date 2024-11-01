@@ -7,9 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Gestor Servicios') }}</title>
 
     <!-- Fonts -->
+    <link rel="icon" href=" {{ asset('img/udg1.webp') }} ">
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('build/assets/app.css')}}">

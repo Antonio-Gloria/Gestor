@@ -27,10 +27,10 @@
                                 <th>Acciones</th>
                                 <th>Id Servicio</th>
                                 <th>Tipo de servicio solicitado</th>
-                                <th>Fecha</th>
+                                <th>Fecha de solicitud</th>
                                 <th>Hora</th>
                                 <th>Nombre del solicitante</th>
-                                <th>Apellido del solicitante</th>
+                                <th>Apellido del solicitante</th>                             
                                 <th>Fecha de realización</th>
                             </tr>
                         </thead>
@@ -44,7 +44,7 @@
                                     <td>{{ $servicio[4] }}</td> <!-- Hora -->
                                     <td>{{ $servicio[5] }}</td> <!-- Nombre del solicitante -->
                                     <td>{{ $servicio[6] }}</td> <!-- Apellido del solicitante -->
-                                    <td> {{$servicio[7]}} </td>
+                                    <td> {{$servicio[7]}} </td> <!-- FechaRealizado -->
                                 </tr>
                             @endforeach
                         </tbody>
