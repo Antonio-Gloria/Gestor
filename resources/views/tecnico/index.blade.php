@@ -61,7 +61,7 @@
 @section('js')
     <script type="text/javascript">
         function modal(parametro) {
-            $('#nombre').html('¿Está seguro de eliminar al usuario con ID ' + parametro + '?');
+            $('#nombre').html('¿Está seguro de eliminar técnico con ID ' + parametro + '?');
             let url = "{{ route('delete-tecnico', ':id') }}";
             url = url.replace(':id', parametro);
             document.getElementById('borrar').href = url;

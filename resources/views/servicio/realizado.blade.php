@@ -10,7 +10,7 @@
             @endif
         </div>
         <div class="row">
-            <h2 class="text-center">Lista de servicios realizados</h2>
+            <h2 class="text">Lista de servicios realizados</h2>
             <hr>
             <br>
             <div class="d-flex justify-content-end mb-3">
@@ -18,8 +18,7 @@
                     Regresar
                 </a>
             </div>
-
-            <div class="car shadow">
+            <div class="card shadow">
                 <div class="card-body">
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
@@ -63,7 +62,7 @@
                             <span id="nombre"></span>
                         </div>
                         <div class="modal-footer">
-                            <a href="" id="solicitar" class="btn btn-danger">Eliminar</a>
+                            <a href="" id="borrar" class="btn btn-danger">Eliminar</a>
                         </div>
                     </div>
                 </div>
@@ -76,7 +75,7 @@
     <script type="text/javascript">
         function modal(parametro) {
             console.log(parametro);
-            $('#nombre').html('¿Está seguro de eliminar el servicio con ID ' + parametro + '?');
+            $('#nombre').html('¿Está seguro de eliminar este servicio realizado con ID ' + parametro + '?');
             let url = "{{ route('delete-servicio', ':id') }}";
             url = url.replace(':id', parametro);
             document.getElementById('borrar').href = url;

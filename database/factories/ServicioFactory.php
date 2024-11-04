@@ -26,9 +26,8 @@ class ServicioFactory extends Factory
             'codigo' => $this->faker->randomNumber,
             'contacto' => $this->faker->phoneNumber,
             'tipo' => $this->faker->title,
-            'status' => 2,
-            'fechaRealizado' => date('Y-m-d', strtotime('-' . rand(1, 3
-            ) . ' days')), 
+            'status' => 1,
+            'fechaRealizado' => date('Y-m-d', strtotime('-' . rand(1, 3) . ' days')), 
             'email' => $this->faker->email,
             'descripcion' => $this->faker->text
         ];
