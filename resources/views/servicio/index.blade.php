@@ -10,7 +10,7 @@
             @endif
         </div>
         <div class="row">
-            <h2 class="text">Lista de Servicios por Realizar</h2>
+            <h2 class="text">Lista de servicios por realizar</h2>
             <hr>
             <br>
             <!-- <div class="d-flex justify-content-center"> -->
@@ -69,7 +69,7 @@
                             @csrf
                             <div class="modal-header bg-dark text-white">
                                 <h5 class="modal-title" id="modalRealizadoLabel">
-                                    <i class="fas fa-file-alt"></i> Detalles del Servicio Realizado
+                                    <i class="fas fa-file-alt"></i> Confirmación
                                 </h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
@@ -112,7 +112,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Servicio</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

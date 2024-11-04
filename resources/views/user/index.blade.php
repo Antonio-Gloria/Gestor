@@ -1,4 +1,7 @@
 @extends('adminlte::page')
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+@stop
 
 @section('content')
     <div class="container">
@@ -36,7 +39,7 @@
                     </table>
                 </div>
             </div>
-            <!-- Modal -->
+            <!-- Modal 
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -49,24 +52,46 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <a href="" id="borrar" class="btn btn-danger">Borrar</a>
+                            <a href="" id="borrar" class="btn btn-danger btn-sm">Borrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- Modal 2 -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="nombre"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <div id="borrar"></div> 
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
+    
 @endsection
 
 @section('js')
+
     <script type="text/javascript">
-        function modal(parametro) {
-            $('#nombre').html('¿Está seguro de eliminar al usuario con ID ' + parametro + '?');
+    
+    function modal(parametro) {
+    $('#nombre').html('¿Está seguro de eliminar al usuario con ID ' + parametro + '?');
 
-            let url = "{{ route('users.destroy', ':id') }}";
-            url = url.replace(':id', parametro);
+    let url = "{{ route('users.destroy', ':id') }}";
+    url = url.replace(':id', parametro);
 
-            let formHtml = `
+    let formHtml = `
         <form id="deleteForm" action="` + url + `" method="POST">
             @csrf
             @method('DELETE')
@@ -74,8 +99,9 @@
         </form>
     `;
 
-            document.getElementById('borrar').innerHTML = formHtml;
-        }
+    document.getElementById('borrar').innerHTML = formHtml;
+}
+
 
         var data = @json($users);
 
