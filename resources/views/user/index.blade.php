@@ -39,25 +39,8 @@
                     </table>
                 </div>
             </div>
-            <!-- Modal 
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Usuario</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <span id="nombre"></span>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <a href="" id="borrar" class="btn btn-danger btn-sm">Borrar</a>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- Modal 2 -->
+          
+            <!-- Modal -->
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
